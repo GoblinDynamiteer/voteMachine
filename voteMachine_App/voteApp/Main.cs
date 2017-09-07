@@ -10,10 +10,10 @@ namespace voteApp
         {
             InitializeComponent();
 
+            UpdateCOMportList();
             OpenCOM();
 
-            // BYGG CHECK CONNECTION...
-            // SVAR FRÅN voteMachine
+            serialPort.Write("S"); // Check status
         }
 
         /* Open COM-Port */
@@ -24,11 +24,14 @@ namespace voteApp
                 try
                 {
                     serialPort.Open();
+                    textBoxData.AppendText(
+                        "COM-port öppnad!\r\n");
                 }
 
                 catch (Exception)
                 {
-                    MessageBox.Show("Kan inte öppna " + serialPort.PortName);
+                    MessageBox.Show("Kan inte öppna " + 
+                        serialPort.PortName);
                 }
 
             }
@@ -71,9 +74,25 @@ namespace voteApp
             }
         }
 
+        /* Clear voteMachine Display and textbox */
         private void btnClear_Click(object sender, EventArgs e)
         {
             serialPort.Write("C");
+            textBoxInput.Text = "";
+        }
+
+        private string data;
+        private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            data = serialPort.ReadExisting();
+            this.Invoke(new EventHandler(DisplayText));
+        }
+
+        /* Display serial data and misc */
+        private void DisplayText(object o, EventArgs e)
+        {
+            /* Display data in textbox */
+            textBoxData.AppendText(data);
         }
     }
 }

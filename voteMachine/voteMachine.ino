@@ -35,17 +35,21 @@ void loop()
     char * data;
     data = readSerial();
 
-    if (green.pressed() == 1) {
-      yes++;
-      sprintf(line[3], "yes: %i", yes);
-      setText();
+    if (green.pressed() == 1)
+    {
+        yes++;
+        sprintf(line[3], "yes: %i", yes);
+        setText();
     }
-    else if(red.pressed() == 1) {
-      no++;
+
+    else if(red.pressed() == 1)
+    {
+        no++;
     }
 
     /* Switch on first char in sent command */
-    switch (data[0]) {
+    switch (data[0])
+    {
         case '1':
             strcpy(line[0], data + 1);
             setText();
@@ -72,6 +76,10 @@ void loop()
                 strcpy(line[i], "\0");
             }
             setText();
+            break;
+
+        case 'S':
+            Serial.println("Connected to voteMachine!");
             break;
 
         default:
