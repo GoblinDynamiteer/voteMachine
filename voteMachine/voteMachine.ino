@@ -1,18 +1,27 @@
 #include <U8glib.h>
+#include <Button.h>
 
 /* Command buffer size / length */
 #define SERIAL_BUFFER_SIZE 30
 #define LINE_HEIGHT 15
+
+Button green(9);
+Button red(10);
 
 const char COMMAND_END = '\n';
 U8GLIB_SSD1306_128X64 display(U8G_I2C_OPT_NONE);
 
 char * line[4];
 
+int yes, no;
+
 void setup()
 {
     Serial.begin(9600);
     Serial.setTimeout(1000);
+
+    yes = 0;
+    no = 0;
 
     for (int i = 0; i < 4; i++)
     {
@@ -25,6 +34,15 @@ void loop()
     /* Get command from bluetooth serial */
     char * data;
     data = readSerial();
+
+    if (green.pressed() == 1) {
+      yes++;
+      sprintf(line[3], "yes: %i", yes);
+      setText();
+    }
+    else if(red.pressed() == 1) {
+      no++;
+    }
 
     /* Switch on first char in sent command */
     switch (data[0]) {
@@ -60,7 +78,7 @@ void loop()
             break;
     }
 
-    delay(50);
+    //delay(50);
 }
 
 
