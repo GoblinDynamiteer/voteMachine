@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace voteApp
 {
@@ -10,8 +11,12 @@ namespace voteApp
             InitializeComponent();
 
             OpenCOM();
+
+            // BYGG CHECK CONNECTION...
+            // SVAR FRÅN voteMachine
         }
 
+        /* Open COM-Port */
         void OpenCOM()
         {
             if (!serialPort.IsOpen)
@@ -29,10 +34,25 @@ namespace voteApp
             }
         }
 
+        /* Update drop-down list with available COM-ports */
+        void UpdateCOMportList()
+        {
+            string[] ports = SerialPort.GetPortNames();
+
+            comboBoxPorts.Items.Clear();
+            comboBoxPorts.Items.AddRange(ports);
+
+        }
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             serialPort.Write(textBoxInput.Text + '\0');
 
+        }
+
+        private void textBoxInput_TextChanged(object sender, EventArgs e)
+        {
+            lblLines.Text = textBoxInput.Lines.Length.ToString();
         }
     }
 }
