@@ -35,6 +35,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.comboBoxPorts = new System.Windows.Forms.ComboBox();
             this.lblLines = new System.Windows.Forms.Label();
+            this.lblStringSend = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // serialPort
@@ -44,6 +45,7 @@
             // textBoxInput
             // 
             this.textBoxInput.Location = new System.Drawing.Point(39, 239);
+            this.textBoxInput.MaxLength = 40;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(504, 165);
@@ -77,11 +79,21 @@
             this.lblLines.TabIndex = 3;
             this.lblLines.Text = "label1";
             // 
+            // lblStringSend
+            // 
+            this.lblStringSend.AutoSize = true;
+            this.lblStringSend.Location = new System.Drawing.Point(39, 444);
+            this.lblStringSend.Name = "lblStringSend";
+            this.lblStringSend.Size = new System.Drawing.Size(70, 25);
+            this.lblStringSend.TabIndex = 4;
+            this.lblStringSend.Text = "label1";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 613);
+            this.Controls.Add(this.lblStringSend);
             this.Controls.Add(this.lblLines);
             this.Controls.Add(this.comboBoxPorts);
             this.Controls.Add(this.btnSend);
@@ -101,6 +113,7 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.ComboBox comboBoxPorts;
         private System.Windows.Forms.Label lblLines;
+        private System.Windows.Forms.Label lblStringSend;
     }
 }
 

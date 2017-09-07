@@ -7,12 +7,17 @@
 const char COMMAND_END = '\n';
 U8GLIB_SSD1306_128X64 display(U8G_I2C_OPT_NONE);
 
-char * line[4] = { "one", "two", "three", "four"};
+char * line[4];
 
 void setup()
 {
     Serial.begin(9600);
     Serial.setTimeout(1000);
+
+    for (int i = 0; i < 4; i++)
+    {
+        line[i] = malloc(10);
+    }
 }
 
 void loop()
@@ -22,13 +27,29 @@ void loop()
     data = readSerial();
 
     /* If command is not empty */
-    if(data[0])
-    {
-        setText();
+    switch (data[0]) {
+        case '1':
+            strcpy(line[0], data + 1);
+            setText();
+            break;
+
+        case '2':
+            strcpy(line[1], data + 1);
+            setText();
+            break;
+
+        case '3':
+            strcpy(line[2], data + 1);
+            setText();
+            break;
+
+        default:
+            break;
     }
 
     delay(50);
 }
+
 
 /* Read serial command (from bluetooth) */
 char * readSerial()
@@ -41,11 +62,19 @@ char * readSerial()
         SERIAL_BUFFER_SIZE
     );
 
-    // Skriv ut size till display -- rad 3
+    if(size > 0)
+    {
+        /* Store command size as string */
+        sprintf(line[3], "%i", size);
+        setText();
 
-    command[size] = 0;
+        command[size] = 0;
 
-    return command;
+        return command;
+    }
+
+    return "0";
+
 }
 
 /* Write text to display */
