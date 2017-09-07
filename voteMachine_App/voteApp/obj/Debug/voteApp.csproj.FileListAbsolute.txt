@@ -1,0 +1,10 @@
+C:\Kod\arduino_school\voteMachine_App\voteApp\bin\Debug\voteApp.exe.config
+C:\Kod\arduino_school\voteMachine_App\voteApp\bin\Debug\voteApp.exe
+C:\Kod\arduino_school\voteMachine_App\voteApp\bin\Debug\voteApp.pdb
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.csprojResolveAssemblyReference.cache
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.frmMain.resources
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.Properties.Resources.resources
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.csproj.GenerateResource.Cache
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.csproj.CoreCompileInputs.cache
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.exe
+C:\Kod\arduino_school\voteMachine_App\voteApp\obj\Debug\voteApp.pdb
