@@ -26,7 +26,7 @@ void loop()
     char * data;
     data = readSerial();
 
-    /* If command is not empty */
+    /* Switch on first char in sent command */
     switch (data[0]) {
         case '1':
             strcpy(line[0], data + 1);
@@ -40,6 +40,19 @@ void loop()
 
         case '3':
             strcpy(line[2], data + 1);
+            setText();
+            break;
+
+        case '4':
+            strcpy(line[3], data + 1);
+            setText();
+            break;
+
+        case 'C':
+            for (int i = 0; i < 4; i++)
+            {
+                strcpy(line[i], "\0");
+            }
             setText();
             break;
 
