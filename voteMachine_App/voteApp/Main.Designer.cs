@@ -36,6 +36,7 @@
             this.comboBoxPorts = new System.Windows.Forms.ComboBox();
             this.lblLines = new System.Windows.Forms.Label();
             this.lblStringSend = new System.Windows.Forms.Label();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serialPort
@@ -88,11 +89,22 @@
             this.lblStringSend.TabIndex = 4;
             this.lblStringSend.Text = "label1";
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(845, 390);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(212, 67);
+            this.btnClear.TabIndex = 5;
+            this.btnClear.Text = "Rensa";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 613);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.lblStringSend);
             this.Controls.Add(this.lblLines);
             this.Controls.Add(this.comboBoxPorts);
@@ -114,6 +126,7 @@
         private System.Windows.Forms.ComboBox comboBoxPorts;
         private System.Windows.Forms.Label lblLines;
         private System.Windows.Forms.Label lblStringSend;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 

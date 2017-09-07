@@ -70,5 +70,10 @@ namespace voteApp
                 lblStringSend.Text += (i + 1).ToString() + textBoxInput.Lines[i] + "\n\r";
             }
         }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            serialPort.Write("C");
+        }
     }
 }
