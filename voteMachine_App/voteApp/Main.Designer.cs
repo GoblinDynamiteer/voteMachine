@@ -37,7 +37,7 @@
             // 
             // serialPort
             // 
-            this.serialPort.PortName = "COM6";
+            this.serialPort.PortName = "COM9";
             // 
             // textBoxInput
             // 
