@@ -3,12 +3,14 @@
 /* Command buffer size / length */
 #define SERIAL_BUFFER_SIZE 30
 #define LINE_HEIGHT 15
+#define BUTTON_TIME 1000
 
 const byte ledPin = 8;
 const byte interruptPinGreen = 2;
 const byte interruptPinRed = 3;
-volatile byte state = LOW;
 
+unsigned long timerYes;
+unsigned long timerNo;
 
 const char COMMAND_END = '\n';
 U8GLIB_SSD1306_128X64 display(U8G_I2C_OPT_NONE);
@@ -18,13 +20,26 @@ char * line[4];
 int yes, no;
 
 
-void yesFunc() {
-    yes++;
-    Serial.println(yes);
+void yesFunc()
+{
+    if(millis() - timerYes > BUTTON_TIME)
+    {
+        yes++;
+        Serial.println(yes);
+
+        timerYes = millis();
+    }
 }
-void noFunc() {
-    no++;
-    Serial.println(no);
+
+void noFunc()
+{
+    if(millis() - timerNo > BUTTON_TIME)
+    {
+        no++;
+        Serial.println(no);
+
+        timerNo = millis();
+    }
 }
 
 void setup()
@@ -37,6 +52,9 @@ void setup()
     pinMode(interruptPinRed, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(interruptPinGreen), yesFunc, LOW);
     attachInterrupt(digitalPinToInterrupt(interruptPinRed), noFunc, LOW);
+
+    timerNo = millis();
+    timerYes = millis();
 
     for (int i = 0; i < 4; i++)
     {
@@ -137,5 +155,3 @@ void setText()
     while(display.nextPage());
 
 }
-
-
