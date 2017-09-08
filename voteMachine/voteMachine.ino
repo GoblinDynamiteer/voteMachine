@@ -1,71 +1,50 @@
 #include <U8glib.h>
 
-/* Command buffer size / length */
 #define SERIAL_BUFFER_SIZE 30
 #define LINE_HEIGHT 15
-#define BUTTON_TIME 1000
-
-const byte ledPin = 8;
-const byte interruptPinGreen = 2;
-const byte interruptPinRed = 3;
-
-unsigned long timerYes;
-unsigned long timerNo;
-
+#define BUTTON_DELAY 100
 const char COMMAND_END = '\n';
+
+const byte int_pin_green = 2;
+const byte int_pin_red = 3;
+
+unsigned long timer_green;
+unsigned long timer_red;
+
 U8GLIB_SSD1306_128X64 display(U8G_I2C_OPT_NONE);
 
 char * line[4];
-
-int yes, no;
-
-
-void yesFunc()
-{
-    if(millis() - timerYes > BUTTON_TIME)
-    {
-        yes++;
-        Serial.println("Yes votes: " + String(yes));
-
-        sprintf(line[3], "YES: %i NO: %i", yes, no);
-        setText();
-
-        timerYes = millis();
-    }
-}
-
-void noFunc()
-{
-    if(millis() - timerNo > BUTTON_TIME)
-    {
-        no++;
-        Serial.println("No votes: " + String(no));
-
-        sprintf(line[3], "YES: %i NO: %i", yes, no);
-        setText();
-
-        timerNo = millis();
-    }
-}
+int vote_green, vote_red;
 
 void setup()
 {
     Serial.begin(9600);
     Serial.setTimeout(1000);
 
-    pinMode(ledPin, OUTPUT);
-    pinMode(interruptPinGreen, INPUT_PULLUP);
-    pinMode(interruptPinRed, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(interruptPinGreen), yesFunc, LOW);
-    attachInterrupt(digitalPinToInterrupt(interruptPinRed), noFunc, LOW);
+    /* Display font */
+    display.setFont(u8g_font_helvB10);
 
-    timerNo = millis();
-    timerYes = millis();
+    /* Interrupt pins */
+    pinMode(int_pin_green, INPUT_PULLUP);
+    pinMode(int_pin_red, INPUT_PULLUP);
+
+    /* Setup interrupts */
+    attachInterrupt(digitalPinToInterrupt(int_pin_green), int_func_green, LOW);
+    attachInterrupt(digitalPinToInterrupt(int_pin_red), int_func_red, LOW);
+
+    timer_red = millis();
+    timer_green = millis();
 
     for (int i = 0; i < 4; i++)
     {
         line[i] = malloc(10);
     }
+
+    strcpy(line[0], "Set text");
+    strcpy(line[1], "with APP!");
+    strcpy(line[2], "\0");
+    strcpy(line[3], "\0");
+    setText();
 }
 
 void loop()
@@ -77,40 +56,41 @@ void loop()
     /* Switch on first char in sent command */
     switch (data[0])
     {
-        case '1':
+        case '1':  // Line 1
             strcpy(line[0], data + 1);
             setText();
+            Serial.prinln("Line 1 set: " + String(data + 1));
             break;
 
-        case '2':
+        case '2': // Line 2
             strcpy(line[1], data + 1);
             setText();
             break;
 
-        case '3':
+        case '3': // Line 3
             strcpy(line[2], data + 1);
             setText();
             break;
 
-        case '4':
+        case '4': // Line 4
             strcpy(line[3], data + 1);
             setText();
             break;
 
-        case 'C':
+        case 'C': // Clear
             for (int i = 0; i < 4; i++)
             {
                 strcpy(line[i], "\0");
             }
 
-            yes = 0;
-            no = 0;
+            vote_red = 0;
+            vote_green = 0;
 
             setText();
 
             break;
 
-        case 'S':
+        case 'S': // Status
             Serial.println("Connected to voteMachine!");
             break;
 
@@ -118,7 +98,6 @@ void loop()
             break;
     }
 
-    //delay(1);
 }
 
 
@@ -127,19 +106,19 @@ char * readSerial()
 {
     char command[SERIAL_BUFFER_SIZE + 1];
 
-    int size = Serial.readBytesUntil(
+    int command_size = Serial.readBytesUntil(
         COMMAND_END,
         command,
         SERIAL_BUFFER_SIZE
     );
 
-    if(size > 0)
+    if(command_size > 0)
     {
         /* Store command size as string */
-        sprintf(line[3], "COMMAND SIZE: %i", size);
+        sprintf(line[3], "CMD SIZE: %i", command_size);
         setText();
 
-        command[size] = 0;
+        command[command_size] = 0;
 
         return command;
     }
@@ -155,9 +134,6 @@ void setText()
 
     do
     {
-        /* Använd 3 globala strängar för rader? */
-        display.setFont(u8g_font_helvB10);
-
         display.drawStr(0, 1 * LINE_HEIGHT, line[0]);
         display.drawStr(0, 2 * LINE_HEIGHT, line[1]);
         display.drawStr(0, 3 * LINE_HEIGHT, line[2]);
@@ -165,4 +141,34 @@ void setText()
     }
     while(display.nextPage());
 
+}
+
+/* Green button interrupt function */
+void int_func_green()
+{
+    if(millis() - timer_green > BUTTON_DELAY)
+    {
+        vote_green++;
+        Serial.println("Green votes: " + String(vote_green));
+
+        sprintf(line[3], "GR: %i RE: %i", vote_green, vote_red);
+        setText();
+
+        timer_green = millis();
+    }
+}
+
+/* Red button interrupt function */
+void int_func_red()
+{
+    if(millis() - timer_red > BUTTON_DELAY)
+    {
+        vote_red++;
+        Serial.println("Red votes: " + String(vote_red));
+
+        sprintf(line[3], "GR: %i RE: %i", vote_green, vote_red);
+        setText();
+
+        timer_red = millis();
+    }
 }
