@@ -59,25 +59,28 @@ void loop()
         case '1':  // Line 1
             strcpy(line[0], data + 1);
             setText();
-            Serial.prinln("Line 1 set: " + String(data + 1));
+            Serial.println("Line 1 set");
             break;
 
         case '2': // Line 2
             strcpy(line[1], data + 1);
             setText();
+            Serial.println("Line 2 set");
             break;
 
         case '3': // Line 3
             strcpy(line[2], data + 1);
             setText();
+            Serial.println("Line 3 set");
             break;
 
         case '4': // Line 4
             strcpy(line[3], data + 1);
             setText();
+            Serial.println("Line 4 set");
             break;
 
-        case 'C': // Clear
+        case 'C': // Clear/Reset
             for (int i = 0; i < 4; i++)
             {
                 strcpy(line[i], "\0");
@@ -91,7 +94,10 @@ void loop()
             break;
 
         case 'S': // Status
+            /* TODO: Add current display data */
             Serial.println("Connected to voteMachine!");
+            Serial.println("GREEN: " + String(vote_green));
+            Serial.println("RED: " + String(vote_red));
             break;
 
         default:
@@ -114,7 +120,7 @@ char * readSerial()
 
     if(command_size > 0)
     {
-        /* Store command size as string */
+        /* Show command size on display */
         sprintf(line[3], "CMD SIZE: %i", command_size);
         setText();
 
