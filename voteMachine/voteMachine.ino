@@ -25,7 +25,10 @@ void yesFunc()
     if(millis() - timerYes > BUTTON_TIME)
     {
         yes++;
-        Serial.println(yes);
+        Serial.println("Yes votes: " + String(yes));
+
+        sprintf(line[3], "YES: %i NO: %i", yes, no);
+        setText();
 
         timerYes = millis();
     }
@@ -36,7 +39,10 @@ void noFunc()
     if(millis() - timerNo > BUTTON_TIME)
     {
         no++;
-        Serial.println(no);
+        Serial.println("No votes: " + String(no));
+
+        sprintf(line[3], "YES: %i NO: %i", yes, no);
+        setText();
 
         timerNo = millis();
     }
@@ -96,7 +102,12 @@ void loop()
             {
                 strcpy(line[i], "\0");
             }
+
+            yes = 0;
+            no = 0;
+
             setText();
+
             break;
 
         case 'S':
@@ -125,7 +136,7 @@ char * readSerial()
     if(size > 0)
     {
         /* Store command size as string */
-        sprintf(line[3], "%i", size);
+        sprintf(line[3], "COMMAND SIZE: %i", size);
         setText();
 
         command[size] = 0;
