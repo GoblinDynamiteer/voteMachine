@@ -34,13 +34,12 @@
             this.textBoxInput = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.comboBoxPorts = new System.Windows.Forms.ComboBox();
-            this.lblLines = new System.Windows.Forms.Label();
-            this.lblStringSend = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxData = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnStatus = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serialPort
@@ -56,7 +55,6 @@
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(504, 165);
             this.textBoxInput.TabIndex = 0;
-            this.textBoxInput.TextChanged += new System.EventHandler(this.textBoxInput_TextChanged);
             // 
             // btnSend
             // 
@@ -75,24 +73,6 @@
             this.comboBoxPorts.Name = "comboBoxPorts";
             this.comboBoxPorts.Size = new System.Drawing.Size(445, 33);
             this.comboBoxPorts.TabIndex = 2;
-            // 
-            // lblLines
-            // 
-            this.lblLines.AutoSize = true;
-            this.lblLines.Location = new System.Drawing.Point(473, 359);
-            this.lblLines.Name = "lblLines";
-            this.lblLines.Size = new System.Drawing.Size(70, 25);
-            this.lblLines.TabIndex = 3;
-            this.lblLines.Text = "label1";
-            // 
-            // lblStringSend
-            // 
-            this.lblStringSend.AutoSize = true;
-            this.lblStringSend.Location = new System.Drawing.Point(34, 347);
-            this.lblStringSend.Name = "lblStringSend";
-            this.lblStringSend.Size = new System.Drawing.Size(70, 25);
-            this.lblStringSend.TabIndex = 4;
-            this.lblStringSend.Text = "label1";
             // 
             // btnClear
             // 
@@ -124,33 +104,43 @@
             // 
             // textBoxData
             // 
-            this.textBoxData.Location = new System.Drawing.Point(898, 158);
+            this.textBoxData.Location = new System.Drawing.Point(39, 416);
             this.textBoxData.Multiline = true;
             this.textBoxData.Name = "textBoxData";
-            this.textBoxData.Size = new System.Drawing.Size(368, 515);
+            this.textBoxData.ReadOnly = true;
+            this.textBoxData.Size = new System.Drawing.Size(747, 263);
             this.textBoxData.TabIndex = 8;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(893, 121);
+            this.label3.Location = new System.Drawing.Point(34, 376);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 25);
             this.label3.TabIndex = 9;
             this.label3.Text = "Status";
             // 
+            // btnStatus
+            // 
+            this.btnStatus.Location = new System.Drawing.Point(738, 360);
+            this.btnStatus.Name = "btnStatus";
+            this.btnStatus.Size = new System.Drawing.Size(47, 40);
+            this.btnStatus.TabIndex = 10;
+            this.btnStatus.Text = "?";
+            this.btnStatus.UseVisualStyleBackColor = true;
+            this.btnStatus.Click += new System.EventHandler(this.btnStatus_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1355, 835);
+            this.ClientSize = new System.Drawing.Size(814, 711);
+            this.Controls.Add(this.btnStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxData);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.lblStringSend);
-            this.Controls.Add(this.lblLines);
             this.Controls.Add(this.comboBoxPorts);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.textBoxInput);
@@ -168,13 +158,12 @@
         private System.Windows.Forms.TextBox textBoxInput;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.ComboBox comboBoxPorts;
-        private System.Windows.Forms.Label lblLines;
-        private System.Windows.Forms.Label lblStringSend;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxData;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnStatus;
     }
 }
 

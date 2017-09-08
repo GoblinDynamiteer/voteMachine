@@ -63,17 +63,6 @@ namespace voteApp
 
         }
 
-        private void textBoxInput_TextChanged(object sender, EventArgs e)
-        {
-            lblLines.Text = textBoxInput.Lines.Length.ToString();
-            lblStringSend.Text = "";
-
-            for (int i = 0; i < textBoxInput.Lines.Length; i++)
-            {
-                lblStringSend.Text += (i + 1).ToString() + textBoxInput.Lines[i] + "\n\r";
-            }
-        }
-
         /* Clear voteMachine Display and textbox */
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -91,8 +80,15 @@ namespace voteApp
         /* Display serial data and misc */
         private void DisplayText(object o, EventArgs e)
         {
+            /* TODO: Intercept RED/GREEN votes -- ADD to labels / graphics */
+
             /* Display data in textbox */
             textBoxData.AppendText(data);
+        }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            serialPort.Write("S"); // Check status
         }
     }
 }
