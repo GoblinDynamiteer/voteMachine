@@ -44,6 +44,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblGreenVotes = new System.Windows.Forms.Label();
             this.lblRedVotes = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -173,11 +174,12 @@
             this.lblGreenVotes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.lblGreenVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold);
             this.lblGreenVotes.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblGreenVotes.Location = new System.Drawing.Point(183, 412);
+            this.lblGreenVotes.Location = new System.Drawing.Point(168, 412);
             this.lblGreenVotes.Name = "lblGreenVotes";
-            this.lblGreenVotes.Size = new System.Drawing.Size(32, 33);
+            this.lblGreenVotes.Size = new System.Drawing.Size(66, 33);
             this.lblGreenVotes.TabIndex = 13;
-            this.lblGreenVotes.Text = "0";
+            this.lblGreenVotes.Text = "000";
+            this.lblGreenVotes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblRedVotes
             // 
@@ -186,18 +188,29 @@
             this.lblRedVotes.BackColor = System.Drawing.Color.Red;
             this.lblRedVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRedVotes.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblRedVotes.Location = new System.Drawing.Point(54, 412);
+            this.lblRedVotes.Location = new System.Drawing.Point(39, 412);
             this.lblRedVotes.Name = "lblRedVotes";
-            this.lblRedVotes.Size = new System.Drawing.Size(32, 33);
+            this.lblRedVotes.Size = new System.Drawing.Size(66, 33);
             this.lblRedVotes.TabIndex = 14;
-            this.lblRedVotes.Text = "0";
+            this.lblRedVotes.Text = "000";
             this.lblRedVotes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(287, 412);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(407, 492);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblRedVotes);
             this.Controls.Add(this.lblGreenVotes);
             this.Controls.Add(this.pictureBox2);
@@ -238,6 +251,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lblGreenVotes;
         private System.Windows.Forms.Label lblRedVotes;
+        private System.Windows.Forms.Button button1;
     }
 }
 

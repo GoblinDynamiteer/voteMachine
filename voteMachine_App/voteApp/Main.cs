@@ -118,21 +118,19 @@ namespace voteApp
             textBoxData.AppendText(serialData);
         }
 
+        /* Filter votes, update labels */
         private void UpdateVoteLabels()
         {
-            string pattern = @"\d{0,4}";
-            Regex regex = new Regex(pattern);
-
-            MatchCollection matches = regex.Matches(serialData);
+            string number = Regex.Match(serialData, @"\d+").Value;
 
             if (serialData.Contains("Green"))
             {
-                lblGreenVotes.Text = matches[0].Value;
+                lblGreenVotes.Text = number;
             }
 
             if (serialData.Contains("Red"))
             {
-                lblGreenVotes.Text = matches[0].Value;
+                lblRedVotes.Text = number;
             }
 
         }
@@ -152,6 +150,14 @@ namespace voteApp
             OpenCOM(comboBoxPorts.Text);
 
             serialPort.Write("S"); // Check status
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            serialData = "Red votes: 12";
+            UpdateVoteLabels();
+            serialData = "Green votes: 13";
+            UpdateVoteLabels();
         }
     }
 }
