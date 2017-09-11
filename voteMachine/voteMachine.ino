@@ -1,4 +1,4 @@
-#include <U8glib.h>
+#include <SSD1306.h>
 
 #define SERIAL_BUFFER_SIZE 30
 #define LINE_HEIGHT 15
@@ -11,18 +11,28 @@ const byte int_pin_red = 3;
 unsigned long timer_green;
 unsigned long timer_red;
 
-U8GLIB_SSD1306_128X64 display(U8G_I2C_OPT_NONE);
+SSD1306 display(0x3c, D3, D5);
 
 char * line[4];
 int vote_green, vote_red;
+
+/* Write text to display */
+void setText(String text, int x = 0, int y = 0)
+{
+    display.clear();
+    display.drawString(x, y, text);
+    display.display();
+}
 
 void setup()
 {
     Serial.begin(9600);
     Serial.setTimeout(1000);
-
-    /* Display font */
-    display.setFont(u8g_font_helvB10);
+  
+    display.init();
+    display.flipScreenVertically();
+    display.setTextAlignment(TEXT_ALIGN_LEFT);
+    display.setFont(ArialMT_Plain_10);
 
     /* Interrupt pins */
     pinMode(int_pin_green, INPUT_PULLUP);
@@ -34,17 +44,16 @@ void setup()
 
     timer_red = millis();
     timer_green = millis();
-
+/*
     for (int i = 0; i < 4; i++)
     {
         line[i] = malloc(10);
-    }
+    }*/
 
     strcpy(line[0], "Set text");
     strcpy(line[1], "with APP!");
     strcpy(line[2], "\0");
     strcpy(line[3], "\0");
-    setText();
 }
 
 void loop()
@@ -53,8 +62,10 @@ void loop()
     char * data;
     data = readSerial();
 
+    setText("Joeläger", 0, 0);
+
     /* Switch on first char in sent command */
-    switch (data[0])
+    /*switch (data[0])
     {
         case '1':  // Line 1
             strcpy(line[0], data + 1);
@@ -95,14 +106,14 @@ void loop()
 
         case 'S': // Status
             /* TODO: Add current display data */
-            Serial.println("Connected to voteMachine!");
+            /*Serial.println("Connected to voteMachine!");
             Serial.println("GREEN: " + String(vote_green));
             Serial.println("RED: " + String(vote_red));
             break;
 
         default:
             break;
-    }
+    }*/
 
 }
 
@@ -122,7 +133,6 @@ char * readSerial()
     {
         /* Show command size on display */
         sprintf(line[3], "CMD SIZE: %i", command_size);
-        setText();
 
         command[command_size] = 0;
 
@@ -133,21 +143,7 @@ char * readSerial()
 
 }
 
-/* Write text to display */
-void setText()
-{
-    display.firstPage();
 
-    do
-    {
-        display.drawStr(0, 1 * LINE_HEIGHT, line[0]);
-        display.drawStr(0, 2 * LINE_HEIGHT, line[1]);
-        display.drawStr(0, 3 * LINE_HEIGHT, line[2]);
-        display.drawStr(0, 4 * LINE_HEIGHT, line[3]);
-    }
-    while(display.nextPage());
-
-}
 
 /* Green button interrupt function */
 void int_func_green()
@@ -158,7 +154,6 @@ void int_func_green()
         Serial.println("Green votes: " + String(vote_green));
 
         sprintf(line[3], "GR: %i RE: %i", vote_green, vote_red);
-        setText();
 
         timer_green = millis();
     }
@@ -173,7 +168,6 @@ void int_func_red()
         Serial.println("Red votes: " + String(vote_red));
 
         sprintf(line[3], "GR: %i RE: %i", vote_green, vote_red);
-        setText();
 
         timer_red = millis();
     }
