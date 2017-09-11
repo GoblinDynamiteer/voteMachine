@@ -15,56 +15,53 @@ namespace voteApp
 
             UpdateCOMportList();
 
-            if (OpenCOM())
+            if (ports.Length > 0)
             {
-                try
+                foreach (string port in ports)
                 {
-                    serialPort.Write("S");
+                    if (OpenCOM(port))
+                    {
+                        break;
+                    }
                 }
+            }
 
-                catch
-                {
-
-                }
-                
+            else
+            {
+                textBoxData.AppendText(
+                        "No ports available!");
             }
 
         }
 
         /* Open COM-Port */
-        bool OpenCOM()
+        bool OpenCOM(string portName)
         {
+            bool success = true;
 
             if (!serialPort.IsOpen)
             {
-                foreach (string port in ports)
+
+                try
                 {
-                    try
-                    {
-                        serialPort.PortName = port;
-                        serialPort.Open();
+                    serialPort.PortName = portName;
+                    serialPort.Open();
 
-                        textBoxData.AppendText(
-                            "Port " + serialPort.PortName + " öppnad!\r\n");
+                    textBoxData.AppendText(
+                        "Port " + serialPort.PortName + " öppnad!\r\n");
+                }
 
-                        if (serialPort.IsOpen)
-                        {
-                            return true;
-                        }
-                    }
+                catch (Exception)
+                {
+                    textBoxData.AppendText(
+                        "Port " + serialPort.PortName + " kunde inte öppnas!\r\n");
 
-                    catch (Exception)
-                    {
-                        textBoxData.AppendText(
-                            "Port " + serialPort.PortName + " kunde inte öppnas!\r\n");
-
-                    }
-
+                    success = false;
                 }
 
             }
 
-            return false;
+            return success;
         }
 
         /* Update drop-down list with available COM-ports */
@@ -122,7 +119,7 @@ namespace voteApp
 
         private void comboBoxPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            OpenCOM(comboBoxPorts.Text);
         }
     }
 }
