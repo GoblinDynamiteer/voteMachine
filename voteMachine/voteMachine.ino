@@ -1,6 +1,6 @@
-por/*
+/*
     voteMachine!
-    by Johan K�mpe & Dylan Saleh
+    by Johan Kampe & Dylan Saleh
 
     NodeMCU Pins:
 
@@ -20,7 +20,7 @@ por/*
 #define BUTTON_DELAY 100
 const char COMMAND_END = '\n';
 
-const byte int_pin_green = D3;
+const byte int_pin_green = D2;
 const byte int_pin_red = D1;
 
 unsigned long timer_green;
@@ -74,10 +74,7 @@ void loop()
 {
     /* Get command from bluetooth serial */
     char * data;
-    do
-    {
-        data = readSerial();
-    } while(data[0] == '0');
+    data = readSerial();
 
     /* Switch on first char in sent command */
     switch (data[0])
@@ -150,7 +147,7 @@ char * readSerial()
         sprintf(line[3], "CMD SIZE: %i", command_size);
         setText();
 
-        command[command_size] = 0;
+        command[command_size] = '\0';
 
         return command;
     }
