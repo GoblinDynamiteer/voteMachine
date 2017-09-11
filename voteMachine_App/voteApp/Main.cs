@@ -6,41 +6,59 @@ namespace voteApp
 {
     public partial class frmMain : Form
     {
+        string[] ports;
+
         public frmMain()
         {
             InitializeComponent();
 
             UpdateCOMportList();
-            OpenCOM();
 
-            serialPort.Write("S"); // Check status
+            if (OpenCOM())
+            {
+                serialPort.Write("S");
+            }
+
         }
 
         /* Open COM-Port */
-        void OpenCOM()
+        bool OpenCOM()
         {
+            foreach (string port in ports)
+            {
+                if (!serialPort.IsOpen)
+                {
+                    serialPort.PortName = port;
+
+                    try
+                    {
+
+                        serialPort.Open();
+                        textBoxData.AppendText(
+                            "COM-port öppnad!\r\n");
+                    }
+
+                    catch (Exception)
+                    {
+
+                    }
+
+                }
+            }
+
             if (!serialPort.IsOpen)
             {
-                try
-                {
-                    serialPort.Open();
-                    textBoxData.AppendText(
-                        "COM-port öppnad!\r\n");
-                }
-
-                catch (Exception)
-                {
-                    MessageBox.Show("Kan inte öppna " + 
-                        serialPort.PortName);
-                }
-
+                MessageBox.Show("Kan inte öppna COM-Port!");
+                return false;
             }
+
+            return true;
         }
 
         /* Update drop-down list with available COM-ports */
         void UpdateCOMportList()
         {
-            string[] ports = SerialPort.GetPortNames();
+            ports = SerialPort.GetPortNames();
 
             comboBoxPorts.Items.Clear();
             comboBoxPorts.Items.AddRange(ports);
