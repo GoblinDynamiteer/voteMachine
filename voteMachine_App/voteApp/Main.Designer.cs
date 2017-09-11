@@ -40,6 +40,12 @@
             this.textBoxData = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnStatus = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblGreenVotes = new System.Windows.Forms.Label();
+            this.lblRedVotes = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort
@@ -50,7 +56,7 @@
             // textBoxInput
             // 
             this.textBoxInput.Location = new System.Drawing.Point(20, 82);
-            this.textBoxInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxInput.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxInput.MaxLength = 40;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
@@ -60,7 +66,7 @@
             // btnSend
             // 
             this.btnSend.Location = new System.Drawing.Point(287, 82);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(2);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(106, 34);
             this.btnSend.TabIndex = 1;
@@ -72,7 +78,7 @@
             // 
             this.comboBoxPorts.FormattingEnabled = true;
             this.comboBoxPorts.Location = new System.Drawing.Point(49, 25);
-            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxPorts.Name = "comboBoxPorts";
             this.comboBoxPorts.Size = new System.Drawing.Size(224, 21);
             this.comboBoxPorts.TabIndex = 2;
@@ -81,7 +87,7 @@
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(287, 133);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(106, 35);
             this.btnClear.TabIndex = 5;
@@ -112,7 +118,7 @@
             // textBoxData
             // 
             this.textBoxData.Location = new System.Drawing.Point(20, 216);
-            this.textBoxData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxData.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxData.Multiline = true;
             this.textBoxData.Name = "textBoxData";
             this.textBoxData.ReadOnly = true;
@@ -132,7 +138,7 @@
             // btnStatus
             // 
             this.btnStatus.Location = new System.Drawing.Point(369, 187);
-            this.btnStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnStatus.Margin = new System.Windows.Forms.Padding(2);
             this.btnStatus.Name = "btnStatus";
             this.btnStatus.Size = new System.Drawing.Size(24, 21);
             this.btnStatus.TabIndex = 10;
@@ -140,11 +146,62 @@
             this.btnStatus.UseVisualStyleBackColor = true;
             this.btnStatus.Click += new System.EventHandler(this.btnStatus_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::voteApp.Properties.Resources.vote_circle_green;
+            this.pictureBox2.Location = new System.Drawing.Point(149, 376);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox2.TabIndex = 12;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = global::voteApp.Properties.Resources.vote_circle_red;
+            this.pictureBox1.Location = new System.Drawing.Point(20, 376);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblGreenVotes
+            // 
+            this.lblGreenVotes.AutoSize = true;
+            this.lblGreenVotes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.lblGreenVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold);
+            this.lblGreenVotes.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblGreenVotes.Location = new System.Drawing.Point(183, 412);
+            this.lblGreenVotes.Name = "lblGreenVotes";
+            this.lblGreenVotes.Size = new System.Drawing.Size(32, 33);
+            this.lblGreenVotes.TabIndex = 13;
+            this.lblGreenVotes.Text = "0";
+            // 
+            // lblRedVotes
+            // 
+            this.lblRedVotes.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblRedVotes.AutoSize = true;
+            this.lblRedVotes.BackColor = System.Drawing.Color.Red;
+            this.lblRedVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRedVotes.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblRedVotes.Location = new System.Drawing.Point(54, 412);
+            this.lblRedVotes.Name = "lblRedVotes";
+            this.lblRedVotes.Size = new System.Drawing.Size(32, 33);
+            this.lblRedVotes.TabIndex = 14;
+            this.lblRedVotes.Text = "0";
+            this.lblRedVotes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(407, 370);
+            this.ClientSize = new System.Drawing.Size(407, 492);
+            this.Controls.Add(this.lblRedVotes);
+            this.Controls.Add(this.lblGreenVotes);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxData);
@@ -155,9 +212,11 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.textBoxInput);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmMain";
             this.Text = "voteMachine App";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,6 +234,10 @@
         private System.Windows.Forms.TextBox textBoxData;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnStatus;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lblGreenVotes;
+        private System.Windows.Forms.Label lblRedVotes;
     }
 }
 

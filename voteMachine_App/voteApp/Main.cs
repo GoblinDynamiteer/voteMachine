@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace voteApp
 {
@@ -13,7 +15,8 @@ namespace voteApp
         {
             InitializeComponent();
 
-            UpdateCOMportList();
+            /* Update port list and fill port comboBox */
+            UpdateCOMportList(); 
 
             if (ports.Length > 0)
             {
@@ -106,10 +109,32 @@ namespace voteApp
         /* Display serial data and misc */
         private void DisplayText(object o, EventArgs e)
         {
-            /* TODO: Intercept RED/GREEN votes -- ADD to labels / graphics */
+            if (serialData.Contains("votes"))
+            {
+                UpdateVoteLabels();
+            }
 
             /* Display data in textbox */
             textBoxData.AppendText(serialData);
+        }
+
+        private void UpdateVoteLabels()
+        {
+            string pattern = @"\d{0,4}";
+            Regex regex = new Regex(pattern);
+
+            MatchCollection matches = regex.Matches(serialData);
+
+            if (serialData.Contains("Green"))
+            {
+                lblGreenVotes.Text = matches[0].Value;
+            }
+
+            if (serialData.Contains("Red"))
+            {
+                lblGreenVotes.Text = matches[0].Value;
+            }
+
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
@@ -121,10 +146,12 @@ namespace voteApp
         {
             serialPort.Close();
 
-            textBoxData.AppendText("Changing port " + serialPort.PortName + "->" 
-                + comboBoxPorts.Text);
+            textBoxData.AppendText("Byter port " + serialPort.PortName + "->" 
+                + comboBoxPorts.Text + "\r\n");
 
             OpenCOM(comboBoxPorts.Text);
+
+            serialPort.Write("S"); // Check status
         }
     }
 }
