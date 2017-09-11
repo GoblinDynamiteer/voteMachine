@@ -49,18 +49,20 @@
             // 
             // textBoxInput
             // 
-            this.textBoxInput.Location = new System.Drawing.Point(39, 158);
+            this.textBoxInput.Location = new System.Drawing.Point(20, 82);
+            this.textBoxInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxInput.MaxLength = 40;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(504, 165);
+            this.textBoxInput.Size = new System.Drawing.Size(254, 88);
             this.textBoxInput.TabIndex = 0;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(574, 158);
+            this.btnSend.Location = new System.Drawing.Point(287, 82);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(212, 65);
+            this.btnSend.Size = new System.Drawing.Size(106, 34);
             this.btnSend.TabIndex = 1;
             this.btnSend.Text = "Skicka!";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -69,16 +71,19 @@
             // comboBoxPorts
             // 
             this.comboBoxPorts.FormattingEnabled = true;
-            this.comboBoxPorts.Location = new System.Drawing.Point(98, 49);
+            this.comboBoxPorts.Location = new System.Drawing.Point(49, 25);
+            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxPorts.Name = "comboBoxPorts";
-            this.comboBoxPorts.Size = new System.Drawing.Size(445, 33);
+            this.comboBoxPorts.Size = new System.Drawing.Size(224, 21);
             this.comboBoxPorts.TabIndex = 2;
+            this.comboBoxPorts.SelectedIndexChanged += new System.EventHandler(this.comboBoxPorts_SelectedIndexChanged);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(574, 256);
+            this.btnClear.Location = new System.Drawing.Point(287, 133);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(212, 67);
+            this.btnClear.Size = new System.Drawing.Size(106, 35);
             this.btnClear.TabIndex = 5;
             this.btnClear.Text = "Rensa";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -87,44 +92,49 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 52);
+            this.label1.Location = new System.Drawing.Point(17, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 25);
+            this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Port:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(34, 121);
+            this.label2.Location = new System.Drawing.Point(17, 63);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 25);
+            this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Ange fråga:";
             // 
             // textBoxData
             // 
-            this.textBoxData.Location = new System.Drawing.Point(39, 416);
+            this.textBoxData.Location = new System.Drawing.Point(20, 216);
+            this.textBoxData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxData.Multiline = true;
             this.textBoxData.Name = "textBoxData";
             this.textBoxData.ReadOnly = true;
-            this.textBoxData.Size = new System.Drawing.Size(747, 263);
+            this.textBoxData.Size = new System.Drawing.Size(376, 139);
             this.textBoxData.TabIndex = 8;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(34, 376);
+            this.label3.Location = new System.Drawing.Point(17, 196);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 25);
+            this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Status";
             // 
             // btnStatus
             // 
-            this.btnStatus.Location = new System.Drawing.Point(738, 360);
+            this.btnStatus.Location = new System.Drawing.Point(369, 187);
+            this.btnStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnStatus.Name = "btnStatus";
-            this.btnStatus.Size = new System.Drawing.Size(47, 40);
+            this.btnStatus.Size = new System.Drawing.Size(24, 21);
             this.btnStatus.TabIndex = 10;
             this.btnStatus.Text = "?";
             this.btnStatus.UseVisualStyleBackColor = true;
@@ -132,9 +142,9 @@
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 711);
+            this.ClientSize = new System.Drawing.Size(407, 370);
             this.Controls.Add(this.btnStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxData);
@@ -145,6 +155,7 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.textBoxInput);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmMain";
             this.Text = "voteMachine App";
             this.ResumeLayout(false);

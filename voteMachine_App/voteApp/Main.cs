@@ -7,6 +7,7 @@ namespace voteApp
     public partial class frmMain : Form
     {
         string[] ports;
+        private string serialData;
 
         public frmMain()
         {
@@ -16,7 +17,16 @@ namespace voteApp
 
             if (OpenCOM())
             {
-                serialPort.Write("S");
+                try
+                {
+                    serialPort.Write("S");
+                }
+
+                catch
+                {
+
+                }
+                
             }
 
         }
@@ -24,35 +34,37 @@ namespace voteApp
         /* Open COM-Port */
         bool OpenCOM()
         {
-            foreach (string port in ports)
-            {
-                if (!serialPort.IsOpen)
-                {
-                    serialPort.PortName = port;
 
+            if (!serialPort.IsOpen)
+            {
+                foreach (string port in ports)
+                {
                     try
                     {
-
+                        serialPort.PortName = port;
                         serialPort.Open();
+
                         textBoxData.AppendText(
-                            "COM-port öppnad!\r\n");
+                            "Port " + serialPort.PortName + " öppnad!\r\n");
+
+                        if (serialPort.IsOpen)
+                        {
+                            return true;
+                        }
                     }
 
                     catch (Exception)
                     {
+                        textBoxData.AppendText(
+                            "Port " + serialPort.PortName + " kunde inte öppnas!\r\n");
 
                     }
 
                 }
+
             }
 
-            if (!serialPort.IsOpen)
-            {
-                MessageBox.Show("Kan inte öppna COM-Port!");
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
         /* Update drop-down list with available COM-ports */
@@ -88,10 +100,9 @@ namespace voteApp
             textBoxInput.Text = "";
         }
 
-        private string data;
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            data = serialPort.ReadExisting();
+            serialData = serialPort.ReadExisting();
             this.Invoke(new EventHandler(DisplayText));
         }
 
@@ -101,12 +112,17 @@ namespace voteApp
             /* TODO: Intercept RED/GREEN votes -- ADD to labels / graphics */
 
             /* Display data in textbox */
-            textBoxData.AppendText(data);
+            textBoxData.AppendText(serialData);
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
             serialPort.Write("S"); // Check status
+        }
+
+        private void comboBoxPorts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
