@@ -119,6 +119,11 @@ namespace voteApp
 
         private void comboBoxPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
+            serialPort.Close();
+
+            textBoxData.AppendText("Changing port " + serialPort.PortName + "->" 
+                + comboBoxPorts.Text);
+
             OpenCOM(comboBoxPorts.Text);
         }
     }
