@@ -2,12 +2,37 @@
     voteMachine!
     by Johan Kampe & Dylan Saleh
 
-    NodeMCU Pins:
+    Hookup:
 
-
+    SSD1306     SDA D2
+    SSD1306     SCL D1
+    HC-06       RX  TX
+    HC-06       TX  RX
+    BUTTON_G    D6
+    BUTTON_R    D5
 
 
  */
+
+#define PIN_WIRE_SDA 4
+#define PIN_WIRE_SCL 5
+#define SDA PIN_WIRE_SDA
+#define SCL PIN_WIRE_SCL
+
+#define LED_BUILTIN 16
+#define BUILTIN_LED 16
+
+#define D0 1
+#define D1 5
+#define D2 4
+#define D3 0
+#define D4 2
+#define D5 14
+#define D6 12
+#define D7 13
+#define D8 15
+#define D9 3
+#define D10 1
 
 
 #include <ESP8266WiFi.h>
@@ -20,16 +45,16 @@
 #define BUTTON_DELAY 100
 const char COMMAND_END = '\n';
 
-const byte int_pin_green = D2;
-const byte int_pin_red = D1;
+const byte int_pin_green = D6;
+const byte int_pin_red = D5;
 
 unsigned long timer_green;
 unsigned long timer_red;
 
-WiFiServer server(80);
-WiFiClient client;
+//WiFiServer server(80);
+//WiFiClient client;
 
-SSD1306 display(0x3c, D3, D5);
+SSD1306 display(0x3c, SDA, SCL);
 
 char * line[4];
 int vote_green, vote_red;
@@ -42,18 +67,21 @@ void setup()
     display.setFont(ArialMT_Plain_10);
 
     Serial.begin(9600);
-    Serial.setTimeout(1000);
+    //Serial.setTimeout(1000);
     delay(10);
 
     /* Interrupt pins */
     pinMode(int_pin_green, INPUT_PULLUP);
     pinMode(int_pin_red, INPUT_PULLUP);
 
-    /* Setup interrupts */
+    /* Setup interrupts */ /*
     attachInterrupt(digitalPinToInterrupt(
         int_pin_green), int_func_green, FALLING);
     attachInterrupt(digitalPinToInterrupt(
-        int_pin_red), int_func_red, FALLING);
+        int_pin_red), int_func_red, FALLING); */
+
+    attachInterrupt(int_pin_green, int_func_green, LOW);
+    attachInterrupt(int_pin_red, int_func_red, FALLING);
 
     timer_red = millis();
     timer_green = millis();
