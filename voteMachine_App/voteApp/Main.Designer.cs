@@ -44,8 +44,11 @@
             this.lblRedVotes = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // serialPort
@@ -152,7 +155,7 @@
             this.lblGreenVotes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.lblGreenVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold);
             this.lblGreenVotes.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblGreenVotes.Location = new System.Drawing.Point(334, 793);
+            this.lblGreenVotes.Location = new System.Drawing.Point(62, 223);
             this.lblGreenVotes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblGreenVotes.Name = "lblGreenVotes";
             this.lblGreenVotes.Size = new System.Drawing.Size(128, 67);
@@ -166,7 +169,7 @@
             this.lblRedVotes.BackColor = System.Drawing.Color.Red;
             this.lblRedVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRedVotes.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblRedVotes.Location = new System.Drawing.Point(74, 795);
+            this.lblRedVotes.Location = new System.Drawing.Point(272, 226);
             this.lblRedVotes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblRedVotes.Name = "lblRedVotes";
             this.lblRedVotes.Size = new System.Drawing.Size(128, 67);
@@ -178,7 +181,7 @@
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox2.Image = global::voteApp.Properties.Resources.vote_circle_green;
-            this.pictureBox2.Location = new System.Drawing.Point(298, 723);
+            this.pictureBox2.Location = new System.Drawing.Point(27, 154);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(200, 200);
@@ -189,7 +192,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::voteApp.Properties.Resources.vote_circle_red;
-            this.pictureBox1.Location = new System.Drawing.Point(40, 723);
+            this.pictureBox1.Location = new System.Drawing.Point(239, 154);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(200, 200);
@@ -197,15 +200,35 @@
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(17, 80);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(397, 42);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "VISA FRÅGAN HÄR!!!!";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.lblGreenVotes);
+            this.groupBox1.Controls.Add(this.lblRedVotes);
+            this.groupBox1.Controls.Add(this.pictureBox2);
+            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Location = new System.Drawing.Point(826, 48);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(472, 631);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(823, 1237);
-            this.Controls.Add(this.lblRedVotes);
-            this.Controls.Add(this.lblGreenVotes);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(1326, 765);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxData);
@@ -221,6 +244,8 @@
             this.Text = "voteMachine App";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,6 +267,8 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lblGreenVotes;
         private System.Windows.Forms.Label lblRedVotes;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

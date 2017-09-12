@@ -104,6 +104,7 @@ namespace voteApp
 
         }
 
+        /* Event method for serial data available */
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             serialData = serialPort.ReadLine();
@@ -141,6 +142,7 @@ namespace voteApp
 
         }
 
+        /* Event method for status button */
         private void btnStatus_Click(object sender, EventArgs e)
         {
             if (serialPort.IsOpen)
