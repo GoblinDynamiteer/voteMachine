@@ -52,8 +52,9 @@ const byte int_pin_red = D5;
 unsigned long timer_green;
 unsigned long timer_red;
 
-//WiFiServer server(80);
-//WiFiClient client;
+WiFiServer server(80);
+WiFiClient client;
+char * ip_string;
 
 SSD1306 display(0x3c, SDA, SCL);
 
@@ -69,8 +70,18 @@ void setup()
     display.setFont(ArialMT_Plain_10);
 
     Serial.begin(9600);
-    //Serial.setTimeout(1000);
     delay(10);
+
+    /* Connect to WiFi */
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(500);
+    }
+
+    /* Start server */
+    server.begin();
 
     /* Interrupt pins */
     pinMode(int_pin_green, INPUT_PULLUP);
@@ -87,9 +98,14 @@ void setup()
         line[i] = (char *)malloc(LINE_LENGHT);
     }
 
+    IPAddress ip = WiFi.localIP();
+
+    ip_string = (char *)malloc(10);
+    sprintf(ip_string, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+
     strcpy(line[0], "Set text");
     strcpy(line[1], "with APP!");
-    strcpy(line[2], "\0");
+    strcpy(line[2], ip_string);
     strcpy(line[3], "\0");
 
     updateScreen();
@@ -143,9 +159,10 @@ void loop()
 
             break;
 
-        case 'S': // Status
+        case 'S': // Statusl
             /* TODO: Add current display data */
             Serial.println("Connected to voteMachine!");
+            Serial.println("Web IP: " + String(ip_string));
             Serial.println("GREEN: " + String(vote_green));
             Serial.println("RED: " + String(vote_red));
             break;
