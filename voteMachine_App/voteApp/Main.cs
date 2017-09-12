@@ -102,20 +102,22 @@ namespace voteApp
 
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            serialData = serialPort.ReadExisting();
+            serialData = serialPort.ReadLine();
+
             this.Invoke(new EventHandler(DisplayText));
         }
 
         /* Display serial data and misc */
         private void DisplayText(object o, EventArgs e)
         {
+
+            /* Display data in textbox */
+            textBoxData.AppendText(serialData + "\r\n");
+
             if (serialData.Contains("votes"))
             {
                 UpdateVoteLabels();
             }
-
-            /* Display data in textbox */
-            textBoxData.AppendText(serialData);
         }
 
         /* Filter votes, update labels */
@@ -150,14 +152,6 @@ namespace voteApp
             OpenCOM(comboBoxPorts.Text);
 
             serialPort.Write("S"); // Check status
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            serialData = "Red votes: 12";
-            UpdateVoteLabels();
-            serialData = "Green votes: 13";
-            UpdateVoteLabels();
         }
     }
 }
