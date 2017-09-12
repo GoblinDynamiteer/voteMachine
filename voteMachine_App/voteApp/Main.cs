@@ -96,8 +96,12 @@ namespace voteApp
         /* Clear voteMachine Display and textbox */
         private void btnClear_Click(object sender, EventArgs e)
         {
-            serialPort.Write("C");
-            textBoxInput.Text = "";
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("C");
+                textBoxInput.Text = "";
+            }
+
         }
 
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -139,7 +143,10 @@ namespace voteApp
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
-            serialPort.Write("S"); // Check status
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("S"); // Check status
+            }
         }
 
         private void comboBoxPorts_SelectedIndexChanged(object sender, EventArgs e)

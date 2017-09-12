@@ -40,10 +40,10 @@
             this.textBoxData = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnStatus = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblGreenVotes = new System.Windows.Forms.Label();
             this.lblRedVotes = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -57,7 +57,7 @@
             // 
             this.textBoxInput.Location = new System.Drawing.Point(39, 175);
             this.textBoxInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBoxInput.MaxLength = 40;
+            this.textBoxInput.MaxLength = 200;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(504, 166);
@@ -146,39 +146,13 @@
             this.btnStatus.UseVisualStyleBackColor = true;
             this.btnStatus.Click += new System.EventHandler(this.btnStatus_Click);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Image = global::voteApp.Properties.Resources.vote_circle_green;
-            this.pictureBox2.Location = new System.Drawing.Point(298, 723);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(200, 200);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 12;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::voteApp.Properties.Resources.vote_circle_red;
-            this.pictureBox1.Location = new System.Drawing.Point(40, 723);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(200, 200);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
-            // 
             // lblGreenVotes
             // 
             this.lblGreenVotes.AutoSize = true;
             this.lblGreenVotes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.lblGreenVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold);
             this.lblGreenVotes.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblGreenVotes.Location = new System.Drawing.Point(336, 792);
+            this.lblGreenVotes.Location = new System.Drawing.Point(334, 793);
             this.lblGreenVotes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblGreenVotes.Name = "lblGreenVotes";
             this.lblGreenVotes.Size = new System.Drawing.Size(128, 67);
@@ -188,12 +162,11 @@
             // 
             // lblRedVotes
             // 
-            this.lblRedVotes.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblRedVotes.AutoSize = true;
             this.lblRedVotes.BackColor = System.Drawing.Color.Red;
             this.lblRedVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRedVotes.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblRedVotes.Location = new System.Drawing.Point(86, 792);
+            this.lblRedVotes.Location = new System.Drawing.Point(74, 795);
             this.lblRedVotes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblRedVotes.Name = "lblRedVotes";
             this.lblRedVotes.Size = new System.Drawing.Size(128, 67);
@@ -201,11 +174,34 @@
             this.lblRedVotes.Text = "000";
             this.lblRedVotes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Image = global::voteApp.Properties.Resources.vote_circle_green;
+            this.pictureBox2.Location = new System.Drawing.Point(298, 723);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(6);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 12;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::voteApp.Properties.Resources.vote_circle_red;
+            this.pictureBox1.Location = new System.Drawing.Point(40, 723);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 983);
+            this.ClientSize = new System.Drawing.Size(823, 1237);
             this.Controls.Add(this.lblRedVotes);
             this.Controls.Add(this.lblGreenVotes);
             this.Controls.Add(this.pictureBox2);
