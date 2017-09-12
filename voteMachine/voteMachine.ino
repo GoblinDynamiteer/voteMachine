@@ -176,6 +176,11 @@ void loop()
         updateScreen();
         update = false;
     }
+
+    if(check_connection())
+    {
+        clientResponse();
+    }
 }
 
 /* Read serial command (from bluetooth) */
@@ -236,4 +241,43 @@ void int_func_red()
         update = true;
         timer_red = millis();
     }
+}
+
+bool check_connection()
+{
+    /* Check for new client connected to server */
+    client = server.available();
+
+    if (!client)
+    {
+        return false;
+    }
+
+    while(!client.available())
+    {
+        delay(1);
+    }
+
+    /* Read request */
+    String request = client.readStringUntil('\r');
+    Serial.println(request);
+    client.flush();
+
+    return true;
+}
+
+/* Show webpage for client */
+void clientResponse()
+{
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: text/html");
+    client.println("");
+    client.println("<!DOCTYPE HTML>");
+
+    client.println("<html>");
+    client.println("<title>voteMachineWeb!</title>");
+    client.println("<h1>Welcome to voteMachine!</h1>");
+    client.println("<p>Green votes: " + String(vote_green));
+    client.println("<p>Red votes: " + String(vote_red));
+    client.println("</html>");
 }
