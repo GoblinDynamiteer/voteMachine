@@ -79,9 +79,12 @@ namespace voteApp
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            lblQuestion.Text = "";
+
             for (int i = 0; i < textBoxInput.Lines.Length; i++)
             {
                 serialPort.Write((i + 1).ToString() + textBoxInput.Lines[i] + '\0');
+                lblQuestion.Text += textBoxInput.Lines[i] + "\r\n";
 
                 int tick = Environment.TickCount & Int32.MaxValue;
 
