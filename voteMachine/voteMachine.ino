@@ -276,7 +276,7 @@ void clientResponse()
 
     client.println("<html>");
     client.println("<title>voteMachineWeb!</title>");
-    client.println("<h1>Welcome to voteMachine!</h1>");
+    client.println("<img src=\"https://ibin.co/3aERSRVvPjON.jpg\"");
     client.println("<p>Green votes: " + String(vote_green));
     client.println("<p>Red votes: " + String(vote_red));
     client.println("</html>");
