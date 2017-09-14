@@ -46,6 +46,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblQuestion = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorkerSendText = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -63,15 +65,15 @@
             this.textBoxInput.MaxLength = 200;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(139, 88);
+            this.textBoxInput.Size = new System.Drawing.Size(139, 61);
             this.textBoxInput.TabIndex = 0;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(182, 93);
+            this.btnSend.Location = new System.Drawing.Point(182, 91);
             this.btnSend.Margin = new System.Windows.Forms.Padding(2);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(106, 34);
+            this.btnSend.Size = new System.Drawing.Size(106, 23);
             this.btnSend.TabIndex = 1;
             this.btnSend.Text = "Skicka!";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -79,6 +81,7 @@
             // 
             // comboBoxPorts
             // 
+            this.comboBoxPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPorts.FormattingEnabled = true;
             this.comboBoxPorts.Location = new System.Drawing.Point(49, 25);
             this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(2);
@@ -86,13 +89,14 @@
             this.comboBoxPorts.Size = new System.Drawing.Size(491, 21);
             this.comboBoxPorts.TabIndex = 2;
             this.comboBoxPorts.SelectedIndexChanged += new System.EventHandler(this.comboBoxPorts_SelectedIndexChanged);
+            this.comboBoxPorts.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.comboBoxPorts_MouseDoubleClick);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(182, 144);
+            this.btnClear.Location = new System.Drawing.Point(182, 129);
             this.btnClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(106, 35);
+            this.btnClear.Size = new System.Drawing.Size(106, 23);
             this.btnClear.TabIndex = 5;
             this.btnClear.Text = "Rensa";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -222,11 +226,26 @@
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(20, 161);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(268, 23);
+            this.progressBar.TabIndex = 17;
+            this.progressBar.Visible = false;
+            // 
+            // backgroundWorkerSendText
+            // 
+            this.backgroundWorkerSendText.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSendText_DoWork);
+            this.backgroundWorkerSendText.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSendText_ProgressChanged);
+            this.backgroundWorkerSendText.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSendText_RunWorkerCompleted);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(557, 366);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnStatus);
             this.Controls.Add(this.label3);
@@ -268,6 +287,8 @@
         private System.Windows.Forms.Label lblRedVotes;
         private System.Windows.Forms.Label lblQuestion;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerSendText;
     }
 }
 

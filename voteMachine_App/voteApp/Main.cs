@@ -4,7 +4,7 @@ using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Management;
-
+using System.ComponentModel;
 
 namespace voteApp
 {
@@ -16,16 +16,19 @@ namespace voteApp
         enum Error
         {
             COMPortNotOpen,
-            COMOpenError
+            COMOpenError,
+            COMNoPortsAvailable
         }
 
         public frmMain()
         {
             InitializeComponent();
 
-            /* Update port list and fill port comboBox */
+            /* Update port list and fill port 
+             * comboBox */
             UpdateCOMportList(); 
 
+            /* Open first available port */
             if (ports.Length > 0)
             {
                 foreach (string port in ports)
@@ -37,10 +40,9 @@ namespace voteApp
                 }
             }
 
-            else
+            else // No COM-ports available
             {
-                textBoxData.AppendText(
-                        "No ports available!");
+                DisplayError(Error.COMNoPortsAvailable);
             }
 
         }
@@ -59,7 +61,8 @@ namespace voteApp
                     serialPort.Open();
 
                     textBoxData.AppendText(
-                        "Port " + serialPort.PortName + " öppnad!\r\n");
+                        "Port " + serialPort.PortName + 
+                        " öppnad!\r\n");
                 }
 
                 catch (Exception)
@@ -80,6 +83,8 @@ namespace voteApp
 
             comboBoxPorts.Items.Clear();
 
+            /* Populate combobox with ports 
+             * (port names and device names) */
             foreach (string port in ports)
             {
                 ComboboxItem item = new ComboboxItem();
@@ -92,37 +97,38 @@ namespace voteApp
 
         }
 
+        /* Event method for send button */
         private void btnSend_Click(object sender, EventArgs e)
         {
             lblQuestion.Text = "";
+            progressBar.Visible = true;
+            textBoxInput.ReadOnly = true;
 
-            for (int i = 0; i < textBoxInput.Lines.Length; i++)
-            {
-                serialPort.Write((i + 1).ToString() + textBoxInput.Lines[i] + '\0');
-                lblQuestion.Text += textBoxInput.Lines[i] + "\r\n";
-
-                int tick = Environment.TickCount & Int32.MaxValue;
-
-                while ((Environment.TickCount & Int32.MaxValue) - tick < 1500)
-                {
-                    ; // Do nothing
-                }
-            }
+            progressBar.Maximum = 100;
+            progressBar.Step = 1;
+            progressBar.Value = 0;
+            backgroundWorkerSendText.RunWorkerAsync();
 
         }
 
-        /* Clear voteMachine Display and textbox */
-        private void btnClear_Click(object sender, EventArgs e)
+        /* Clear voteMachine Display 
+         * and textbox */
+        private void btnClear_Click(
+            object sender, EventArgs e)
         {
             if (serialPort.IsOpen)
             {
                 serialPort.Write("C");
                 textBoxInput.Text = "";
 
+                lblGreenVotes.Text = "0";
+                lblRedVotes.Text = "0";
+
             }
 
         }
 
+        /* Display errors in data textbox */
         private void DisplayError(Error error)
         {
             textBoxData.AppendText("Error: ");
@@ -130,11 +136,18 @@ namespace voteApp
             switch (error)
             {
                 case Error.COMPortNotOpen:
-                    textBoxData.AppendText("COM-port not open!");
+                    textBoxData.AppendText(
+                        "COM-port not open!");
                     break;
 
                 case Error.COMOpenError:
-                    textBoxData.AppendText("Cannot open COM-port!");
+                    textBoxData.AppendText(
+                        "Cannot open COM-port!");
+                    break;
+
+                case Error.COMNoPortsAvailable:
+                    textBoxData.AppendText(
+                        "No COM-ports available!");
                     break;
 
                 default:
@@ -145,7 +158,8 @@ namespace voteApp
         }
 
         /* Event method for serial data available */
-        private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void serialPort_DataReceived(
+            object sender, SerialDataReceivedEventArgs e)
         {
             serialData = serialPort.ReadLine();
 
@@ -168,7 +182,8 @@ namespace voteApp
         /* Filter votes, update labels */
         private void UpdateVoteLabels()
         {
-            string number = Regex.Match(serialData, @"\d+").Value;
+            string number = Regex.Match(
+                serialData, @"\d+").Value;
 
             if (serialData.Contains("Green"))
             {
@@ -191,14 +206,18 @@ namespace voteApp
             }
         }
 
-        private void comboBoxPorts_SelectedIndexChanged(object sender, EventArgs e)
+        /* Event method for comboBox change */
+        private void comboBoxPorts_SelectedIndexChanged(
+            object sender, EventArgs e)
         {
             serialPort.Close();
 
-            string newPort = (comboBoxPorts.SelectedItem as ComboboxItem).Value.ToString();
+            string newPort = (
+                comboBoxPorts.SelectedItem 
+                as ComboboxItem).Value.ToString();
 
-            textBoxData.AppendText("Byter port " + serialPort.PortName + "->" 
-                + newPort + "\r\n");
+            textBoxData.AppendText("Byter port " + 
+                serialPort.PortName + "->" + newPort + "\r\n");
 
             if (OpenCOM(newPort))
             {
@@ -227,7 +246,51 @@ namespace voteApp
             return "Not Found";
         }
 
+        private void backgroundWorkerSendText_DoWork(
+            object sender, DoWorkEventArgs e)
+        {
+            var backgroundWorker = sender as BackgroundWorker;
+
+            for (int i = 0; i < textBoxInput.Lines.Length; i++)
+            {
+                serialPort.Write((i + 1).ToString() +
+                    textBoxInput.Lines[i] + '\0');
+
+                lblQuestion.Text += textBoxInput.Lines[i] + "\r\n";
+
+                int tick = Environment.TickCount & Int32.MaxValue;
+
+                while ((Environment.TickCount & Int32.MaxValue) -
+                    tick < 1500)
+                {
+                    ; // Do nothing
+                }
+
+                backgroundWorker.ReportProgress(
+                    (i+1) / textBoxInput.Lines.Length * 100);
+            }
+
+        }
+
+        private void backgroundWorkerSendText_ProgressChanged(
+            object sender, ProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorkerSendText_RunWorkerCompleted(
+            object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        private void comboBoxPorts_MouseDoubleClick(
+            object sender, MouseEventArgs e)
+        {
+            UpdateCOMportList();
+        }
     }
+
 
     /* Override combobox ToString, 
      * to have different text/value */
