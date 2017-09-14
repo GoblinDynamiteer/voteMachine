@@ -89,7 +89,6 @@
             this.comboBoxPorts.Size = new System.Drawing.Size(491, 21);
             this.comboBoxPorts.TabIndex = 2;
             this.comboBoxPorts.SelectedIndexChanged += new System.EventHandler(this.comboBoxPorts_SelectedIndexChanged);
-            this.comboBoxPorts.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.comboBoxPorts_MouseDoubleClick);
             // 
             // btnClear
             // 
@@ -236,6 +235,7 @@
             // 
             // backgroundWorkerSendText
             // 
+            this.backgroundWorkerSendText.WorkerReportsProgress = true;
             this.backgroundWorkerSendText.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSendText_DoWork);
             this.backgroundWorkerSendText.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSendText_ProgressChanged);
             this.backgroundWorkerSendText.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSendText_RunWorkerCompleted);

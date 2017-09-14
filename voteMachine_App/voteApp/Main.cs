@@ -47,89 +47,8 @@ namespace voteApp
 
         }
 
-        /* Open COM-Port */
-        bool OpenCOM(string portName)
-        {
-            bool success = true;
-
-            if (!serialPort.IsOpen)
-            {
-
-                try
-                {
-                    serialPort.PortName = portName;
-                    serialPort.Open();
-
-                    textBoxData.AppendText(
-                        "Port " + serialPort.PortName + 
-                        " öppnad!\r\n");
-                }
-
-                catch (Exception)
-                {
-                    DisplayError(Error.COMOpenError);
-                    success = false;
-                }
-
-            }
-
-            return success;
-        }
-
-        /* Update drop-down list with available COM-ports */
-        void UpdateCOMportList()
-        {
-            ports = SerialPort.GetPortNames();
-
-            comboBoxPorts.Items.Clear();
-
-            /* Populate combobox with ports 
-             * (port names and device names) */
-            foreach (string port in ports)
-            {
-                ComboboxItem item = new ComboboxItem();
-
-                item.Text = port + ": " + SerialPortDeviceName(port);
-                item.Value = port;
-
-                comboBoxPorts.Items.Add(item);
-            }
-
-        }
-
-        /* Event method for send button */
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            lblQuestion.Text = "";
-            progressBar.Visible = true;
-            textBoxInput.ReadOnly = true;
-
-            progressBar.Maximum = 100;
-            progressBar.Step = 1;
-            progressBar.Value = 0;
-            backgroundWorkerSendText.RunWorkerAsync();
-
-        }
-
-        /* Clear voteMachine Display 
-         * and textbox */
-        private void btnClear_Click(
-            object sender, EventArgs e)
-        {
-            if (serialPort.IsOpen)
-            {
-                serialPort.Write("C");
-                textBoxInput.Text = "";
-
-                lblGreenVotes.Text = "0";
-                lblRedVotes.Text = "0";
-
-            }
-
-        }
-
         /* Display errors in data textbox */
-        private void DisplayError(Error error)
+        private void DisplayError(Error error, string extra = "")
         {
             textBoxData.AppendText("Error: ");
 
@@ -142,7 +61,7 @@ namespace voteApp
 
                 case Error.COMOpenError:
                     textBoxData.AppendText(
-                        "Cannot open COM-port!");
+                        "Cannot open port " + extra + "!");
                     break;
 
                 case Error.COMNoPortsAvailable:
@@ -155,15 +74,6 @@ namespace voteApp
             }
 
             textBoxData.AppendText("\r\n");
-        }
-
-        /* Event method for serial data available */
-        private void serialPort_DataReceived(
-            object sender, SerialDataReceivedEventArgs e)
-        {
-            serialData = serialPort.ReadLine();
-
-            this.Invoke(new EventHandler(DisplayText));
         }
 
         /* Display serial data and misc */
@@ -197,14 +107,6 @@ namespace voteApp
 
         }
 
-        /* Event method for status button */
-        private void btnStatus_Click(object sender, EventArgs e)
-        {
-            if (serialPort.IsOpen)
-            {
-                serialPort.Write("S"); // Check status
-            }
-        }
 
         /* Event method for comboBox change */
         private void comboBoxPorts_SelectedIndexChanged(
@@ -222,6 +124,118 @@ namespace voteApp
             if (OpenCOM(newPort))
             {
                 serialPort.Write("S"); // Check status
+            }
+
+        }
+
+        #region Button methods
+
+        /* Event method for send button */
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            lblQuestion.Text = "";
+            progressBar.Visible = true;
+            textBoxInput.ReadOnly = true;
+
+            progressBar.Maximum = 100;
+            progressBar.Step = 1;
+            progressBar.Value = 0;
+
+            backgroundWorkerSendText.RunWorkerAsync();
+
+            lblQuestion.Text = "";
+            for (int i = 0; i > textBoxInput.Lines.Length; i++)
+            {
+                lblQuestion.Text += textBoxInput.Lines[i] + "\r\n";
+            }
+        }
+
+        /* Event method for status button */
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("S"); // Check status
+            }
+        }
+
+        /* Clear voteMachine Display 
+        * and textbox */
+        private void btnClear_Click(
+            object sender, EventArgs e)
+        {
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("C");
+                textBoxInput.Text = "";
+
+                lblGreenVotes.Text = "0";
+                lblRedVotes.Text = "0";
+
+            }
+        }
+        #endregion
+
+        #region ComPort/serialport methods
+
+        /* Open COM-Port */
+        bool OpenCOM(string portName)
+        {
+            bool success = true;
+
+            if (!serialPort.IsOpen)
+            {
+
+                try
+                {
+                    serialPort.PortName = portName;
+                    serialPort.Open();
+
+                    textBoxData.AppendText(
+                        "Port " + serialPort.PortName +
+                        " öppnad!\r\n");
+                }
+
+                catch (Exception)
+                {
+                    DisplayError(Error.COMOpenError,
+                        serialPort.PortName);
+                    success = false;
+                }
+
+            }
+
+            return success;
+        }
+
+        /* Event method for serial data available */
+        private void serialPort_DataReceived(
+            object sender, SerialDataReceivedEventArgs e)
+        {
+            serialData = serialPort.ReadLine();
+
+            this.Invoke(new EventHandler(DisplayText));
+        }
+
+        /* Update drop-down list with available COM-ports */
+        void UpdateCOMportList()
+        {
+            ports = SerialPort.GetPortNames();
+
+            Array.Sort(ports);
+
+            comboBoxPorts.Items.Clear();
+
+            /* Populate combobox with ports 
+             * (port names and device names) */
+            foreach (string port in ports)
+            {
+                ComboboxItem item = new ComboboxItem();
+
+                item.Text = port + ": " + SerialPortDeviceName(port);
+                item.Value = port;
+
+                comboBoxPorts.Items.Add(item);
             }
 
         }
@@ -246,17 +260,20 @@ namespace voteApp
             return "Not Found";
         }
 
+        #endregion
+
+        #region BackgroundWorker
+
+        /* Background worker */
         private void backgroundWorkerSendText_DoWork(
             object sender, DoWorkEventArgs e)
         {
-            var backgroundWorker = sender as BackgroundWorker;
+            var backgroundWorkerSendText = sender as BackgroundWorker;
 
             for (int i = 0; i < textBoxInput.Lines.Length; i++)
             {
                 serialPort.Write((i + 1).ToString() +
                     textBoxInput.Lines[i] + '\0');
-
-                lblQuestion.Text += textBoxInput.Lines[i] + "\r\n";
 
                 int tick = Environment.TickCount & Int32.MaxValue;
 
@@ -266,8 +283,9 @@ namespace voteApp
                     ; // Do nothing
                 }
 
-                backgroundWorker.ReportProgress(
-                    (i+1) / textBoxInput.Lines.Length * 100);
+                backgroundWorkerSendText.ReportProgress(
+                    (int)((float)(i+1) / (float)textBoxInput.Lines.Length 
+                    * 100.0));
             }
 
         }
@@ -281,14 +299,11 @@ namespace voteApp
         private void backgroundWorkerSendText_RunWorkerCompleted(
             object sender, RunWorkerCompletedEventArgs e)
         {
-
+            textBoxInput.ReadOnly = false;
         }
 
-        private void comboBoxPorts_MouseDoubleClick(
-            object sender, MouseEventArgs e)
-        {
-            UpdateCOMportList();
-        }
+        #endregion
+
     }
 
 
