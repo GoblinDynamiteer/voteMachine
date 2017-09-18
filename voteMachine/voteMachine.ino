@@ -101,12 +101,12 @@ void setup()
     IPAddress ip = WiFi.localIP();
 
     ip_string = (char *)malloc(10);
-    sprintf(ip_string, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+    sprintf(ip_string, "IP: %d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 
     strcpy(line[0], "Set text");
     strcpy(line[1], "with APP!");
-    strcpy(line[2], ip_string);
-    strcpy(line[3], "\0");
+    strcpy(line[2], "\0");
+    strcpy(line[3], ip_string);
 
     updateScreen();
 
@@ -213,8 +213,10 @@ void updateScreen()
 
     for(int i = 0; i < MAX_LINES; i++)
     {
-        display.drawString(0, LINE_HEIGHT * i,  String(line[i]));
+        display.drawString(0, LINE_HEIGHT * i + (i > 2 ? 10 : 0),  String(line[i]));
     }
+
+    display.drawHorizontalLine(0, LINE_HEIGHT * 4 - 2 , 128);
 
     display.display();
 }
