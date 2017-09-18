@@ -269,20 +269,31 @@ bool check_connection()
 /* Show webpage for client */
 void clientResponse()
 {
+    const String web_title = "voteMachineWeb!";
+    const String font_name = "Oswald";
+    const String font_url = "https://fonts.googleapis.com/css?family=" + font_name;
+    const String font_color = "#fff";
+    const String bg_color = "#000";
+    const String font_size ="70";
+
     client.println("HTTP/1.1 200 OK");
     client.println("Content-Type: text/html");
     client.println("");
     client.println("<!DOCTYPE HTML>");
 
     client.println("<html>");
-    client.println("<title>voteMachineWeb!</title>");
-    client.println("<link href=\"https://fonts.googleapis.com/css?family=Oswald\" rel=\"stylesheet\">");
-    client.println("<body bgcolor=#000 style=\"font-family: 'Oswald';color:#fff;\">");
-    client.println("<h1>" + String(line[0]) + "</h1>");
-    client.println("<h1>" + String(line[1]) + "</h1>");
-    client.println("<h1>" + String(line[2]) + "</h1>");
-    //client.println("<img src=\"https://ibin.co/3aERSRVvPjON.jpg\"");
-    client.println("<p>Green votes: " + String(vote_green));
-    client.println("<p>Red votes: " + String(vote_red));
+    client.println("<title>" + web_title + "</title>");
+    client.println("<link href=\"" + font_url + "\" rel=\"stylesheet\">");
+    client.println("<body bgcolor=" + bg_color + " style=\"font-family: '" +
+        font_name + "';color:" + font_color + ";font-size: " + font_size + "px\">");
+
+    client.println(String(line[0]) + "<br>");
+    client.println(String(line[1]) + "<br>");
+    client.println(String(line[2]) + "<p>");
+
+    client.println("<font style=\"color:green;\">Green votes: " +
+        String(vote_green) + "</font> | ");
+    client.println("<font style=\"color:red;\">Red votes: " +
+        String(vote_red) + "</font>");
     client.println("</html>");
 }
