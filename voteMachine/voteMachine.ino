@@ -276,6 +276,8 @@ void clientResponse()
 
     client.println("<html>");
     client.println("<title>voteMachineWeb!</title>");
+    client.println("<link href=\"https://fonts.googleapis.com/css?family=Oswald\" rel=\"stylesheet\">");
+    client.println("<body bgcolor=#000 style=\"font-family: 'Oswald';color:#fff;\">");
     client.println("<h1>" + String(line[0]) + "</h1>");
     client.println("<h1>" + String(line[1]) + "</h1>");
     client.println("<h1>" + String(line[2]) + "</h1>");
