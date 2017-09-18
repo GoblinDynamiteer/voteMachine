@@ -45,6 +45,8 @@ namespace voteApp
                 DisplayError(Error.COMNoPortsAvailable);
             }
 
+            lblQuestion.Text = "";
+
         }
 
         /* Display errors in data textbox */
@@ -133,7 +135,8 @@ namespace voteApp
         /* Event method for send button */
         private void btnSend_Click(object sender, EventArgs e)
         {
-            lblQuestion.Text = "";
+            lblQuestion.Text = textBoxInput.Text;
+
             progressBar.Visible = true;
             textBoxInput.ReadOnly = true;
 
@@ -143,11 +146,6 @@ namespace voteApp
 
             backgroundWorkerSendText.RunWorkerAsync();
 
-            lblQuestion.Text = "";
-            for (int i = 0; i > textBoxInput.Lines.Length; i++)
-            {
-                lblQuestion.Text += textBoxInput.Lines[i] + "\r\n";
-            }
         }
 
         /* Event method for status button */
