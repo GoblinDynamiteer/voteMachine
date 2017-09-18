@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO.Ports;
-using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Linq;
+using System.Management;
+
 
 namespace voteApp
 {
@@ -10,6 +12,12 @@ namespace voteApp
     {
         string[] ports;
         private string serialData;
+
+        enum Error
+        {
+            COMPortNotOpen,
+            COMOpenError
+        }
 
         public frmMain()
         {
@@ -56,9 +64,7 @@ namespace voteApp
 
                 catch (Exception)
                 {
-                    textBoxData.AppendText(
-                        "Port " + serialPort.PortName + " kunde inte öppnas!\r\n");
-
+                    DisplayError(Error.COMOpenError);
                     success = false;
                 }
 
@@ -73,7 +79,16 @@ namespace voteApp
             ports = SerialPort.GetPortNames();
 
             comboBoxPorts.Items.Clear();
-            comboBoxPorts.Items.AddRange(ports);
+
+            foreach (string port in ports)
+            {
+                ComboboxItem item = new ComboboxItem();
+
+                item.Text = port + ": " + SerialPortDeviceName(port);
+                item.Value = port;
+
+                comboBoxPorts.Items.Add(item);
+            }
 
         }
 
@@ -103,8 +118,30 @@ namespace voteApp
             {
                 serialPort.Write("C");
                 textBoxInput.Text = "";
+
             }
 
+        }
+
+        private void DisplayError(Error error)
+        {
+            textBoxData.AppendText("Error: ");
+
+            switch (error)
+            {
+                case Error.COMPortNotOpen:
+                    textBoxData.AppendText("COM-port not open!");
+                    break;
+
+                case Error.COMOpenError:
+                    textBoxData.AppendText("Cannot open COM-port!");
+                    break;
+
+                default:
+                    break;
+            }
+
+            textBoxData.AppendText("\r\n");
         }
 
         /* Event method for serial data available */
@@ -158,12 +195,51 @@ namespace voteApp
         {
             serialPort.Close();
 
+            string newPort = (comboBoxPorts.SelectedItem as ComboboxItem).Value.ToString();
+
             textBoxData.AppendText("Byter port " + serialPort.PortName + "->" 
-                + comboBoxPorts.Text + "\r\n");
+                + newPort + "\r\n");
 
-            OpenCOM(comboBoxPorts.Text);
+            if (OpenCOM(newPort))
+            {
+                serialPort.Write("S"); // Check status
+            }
 
-            serialPort.Write("S"); // Check status
+        }
+
+        /* Gets device name for COM-port */
+        private string SerialPortDeviceName(string portName)
+        {
+            using (var searcher = new ManagementObjectSearcher
+               ("SELECT * FROM WIN32_SerialPort"))
+            {
+                var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
+
+                foreach (var port in ports)
+                {
+                    if (portName == port["DeviceID"].ToString())
+                    {
+                        return port["Name"].ToString();
+                    }
+                }
+            }
+
+            return "Not Found";
+        }
+
+    }
+
+    /* Override combobox ToString, 
+     * to have different text/value */
+    public class ComboboxItem
+    {
+        public string Text { get; set; }
+        public object Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
+
 }
