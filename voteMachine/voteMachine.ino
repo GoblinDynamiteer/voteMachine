@@ -182,10 +182,15 @@ void loop()
             /* TODO: Add current display data */
             Serial.println("Connected to voteMachine!");
             Serial.println(String(ip_string));
-            Serial.println(String(vote_option_green) + ": "
-                + String(vote_count_green));
-            Serial.println(String(vote_option_red) + ": "
-                + String(vote_count_red));
+
+            for (int i = 0; i < MAX_LINES; i++)
+            {
+                if(line[i][0] != '\0')
+                {
+                    Serial.println(String(line[i]));
+                }
+            }
+
             break;
 
         default:
