@@ -62,7 +62,7 @@ char * vote_option_red;
 char * vote_option_green;
 
 int vote_count_green, vote_count_red;
-bool update;
+bool update_display, int_red_triggered, int_green_triggered;
 
 void setup()
 {
@@ -117,7 +117,9 @@ void setup()
 
     updateScreen();
 
-    update = false;
+    update_display = false;
+    int_green_triggered = false;
+    int_red_triggered = false;
 }
 
 void loop()
@@ -131,37 +133,37 @@ void loop()
     {
         case '1':  // Line 1
             strcpy(line[0], data + 1);
-            update = true;
+            update_display = true;
             Serial.println("Line 1 set");
             break;
 
         case '2': // Line 2
             strcpy(line[1], data + 1);
-            update = true;
+            update_display = true;
             Serial.println("Line 2 set");
             break;
 
         case '3': // Line 3
             strcpy(line[2], data + 1);
-            update = true;
+            update_display = true;
             Serial.println("Line 3 set");
             break;
 
         case '4': // Line 4
             strcpy(line[3], data + 1);
-            update = true;
+            update_display = true;
             Serial.println("Line 4 set");
             break;
 
         case 'R': // Red button vote option
             strcpy(vote_option_red, data + 1);
-            update = true;
+            update_display = true;
             Serial.println("Red option set");
             break;
 
         case 'G': // Red button vote option
             strcpy(vote_option_green, data + 1);
-            update = true;
+            update_display = true;
             Serial.println("Green option set");
             break;
 
@@ -174,7 +176,7 @@ void loop()
             vote_count_red = 0;
             vote_count_green = 0;
 
-            update = true;
+            update_display = true;
 
             break;
 
@@ -197,10 +199,24 @@ void loop()
             break;
     }
 
-    if(update)
+    if(int_green_triggered)
+    {
+        Serial.println("Green votes: " + String(vote_count_green));
+        timer_green = millis();
+        int_green_triggered = false;;
+    }
+
+    if(int_red_triggered)
+    {
+        Serial.println("Red votes: " + String(vote_count_red));
+        timer_red = millis();
+        int_red_triggered = false;
+    }
+
+    if(update_display)
     {
         updateScreen();
-        update = false;
+        update_display = false;
     }
 
     if(check_connection())
@@ -251,24 +267,22 @@ void updateScreen()
 /* Green button interrupt function */
 void int_func_green()
 {
-    if(millis() - timer_green > BUTTON_DELAY)
+    if(!int_green_triggered && millis() - timer_green > BUTTON_DELAY)
     {
         vote_count_green++;
-        Serial.println("Green votes: " + String(vote_count_green));
-        update = true;
-        timer_green = millis();
+        int_green_triggered = true;
+        update_display = true;
     }
 }
 
 /* Red button interrupt function */
 void int_func_red()
 {
-    if(millis() - timer_red > BUTTON_DELAY)
+    if(!int_red_triggered && millis() - timer_red > BUTTON_DELAY)
     {
         vote_count_red++;
-        Serial.println("Red votes: " + String(vote_count_red));
-        update = true;
-        timer_red = millis();
+        int_red_triggered = true;
+        update_display = true;
     }
 }
 
