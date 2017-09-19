@@ -40,7 +40,7 @@
 
 #define SERIAL_BUFFER_SIZE 30
 #define LINE_HEIGHT 10
-#define LINE_LENGHT 30
+#define LINE_LENGTH 30
 #define MAX_LINES 5
 #define BUTTON_DELAY 200
 const char COMMAND_END = '\n';
@@ -61,7 +61,7 @@ char * ip_string;
 char * vote_option_red;
 char * vote_option_green;
 
-int vote_green, vote_red;
+int vote_count_green, vote_count_red;
 bool update;
 
 void setup()
@@ -97,10 +97,10 @@ void setup()
 
     for (int i = 0; i < MAX_LINES; i++)
     {
-        line[i] = (char *)malloc(LINE_LENGHT);
+        line[i] = (char *)malloc(LINE_LENGTH);
     }
 
-    ip_string = (char *)malloc(10);
+    ip_string = (char *)malloc(20);
     vote_option_red = (char *)malloc(12);
     vote_option_green = (char *)malloc(12);
 
@@ -171,8 +171,8 @@ void loop()
                 strcpy(line[i], "\0");
             }
 
-            vote_red = 0;
-            vote_green = 0;
+            vote_count_red = 0;
+            vote_count_green = 0;
 
             update = true;
 
@@ -183,9 +183,9 @@ void loop()
             Serial.println("Connected to voteMachine!");
             Serial.println(String(ip_string));
             Serial.println(String(vote_option_green) + ": "
-                + String(vote_green));
+                + String(vote_count_green));
             Serial.println(String(vote_option_red) + ": "
-                + String(vote_red));
+                + String(vote_count_red));
             break;
 
         default:
@@ -229,7 +229,7 @@ char * readSerial()
 void updateScreen()
 {
     sprintf(line[MAX_LINES-1], "%s: %i | %s: %i",
-        vote_option_green, vote_green, vote_option_red, vote_red);
+        vote_option_green, vote_count_green, vote_option_red, vote_count_red);
 
     display.clear();
 
@@ -248,8 +248,8 @@ void int_func_green()
 {
     if(millis() - timer_green > BUTTON_DELAY)
     {
-        vote_green++;
-        Serial.println("Green votes: " + String(vote_green));
+        vote_count_green++;
+        Serial.println("Green votes: " + String(vote_count_green));
         update = true;
         timer_green = millis();
     }
@@ -260,8 +260,8 @@ void int_func_red()
 {
     if(millis() - timer_red > BUTTON_DELAY)
     {
-        vote_red++;
-        Serial.println("Red votes: " + String(vote_red));
+        vote_count_red++;
+        Serial.println("Red votes: " + String(vote_count_red));
         update = true;
         timer_red = millis();
     }
@@ -315,9 +315,11 @@ void clientResponse()
     client.println(String(line[1]) + "<br>");
     client.println(String(line[2]) + "<p>");
 
-    client.println("<font style=\"color:green;\">Green votes: " +
-        String(vote_green) + "</font> | ");
-    client.println("<font style=\"color:red;\">Red votes: " +
-        String(vote_red) + "</font>");
+    client.println("<font style=\"color:green;\">"
+        + String(vote_option_green) + ": "
+        + String(vote_count_green) + "</font> | ");
+    client.println("<font style=\"color:red;\">"
+        + String(vote_option_red) + ": "
+        + String(vote_count_red) + "</font>");
     client.println("</html>");
 }
