@@ -191,9 +191,14 @@ namespace voteApp
                 serialPort.Write("C");
                 textBoxInput.Text = "";
 
+                textBoxGreenOpt.Text = "";
+                textBoxRedOpt.Text = "";
+
+                lblVoteOptGreen.Text = "Green";
+                lblVoteOptRed.Text = "Red";
+
                 lblGreenVotes.Text = "0";
                 lblRedVotes.Text = "0";
-
             }
         }
         #endregion
