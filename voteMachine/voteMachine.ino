@@ -11,7 +11,6 @@
     BUTTON_G    D6
     BUTTON_R    D5
 
-
  */
 
 #include <ESP8266WiFi.h>
@@ -54,11 +53,14 @@ unsigned long timer_red;
 
 WiFiServer server(80);
 WiFiClient client;
-char * ip_string;
 
 SSD1306 display(0x3c, SDA, SCL);
 
 char * line[MAX_LINES];
+char * ip_string;
+char * vote_option_red;
+char * vote_option_green;
+
 int vote_green, vote_red;
 bool update;
 
@@ -98,15 +100,22 @@ void setup()
         line[i] = (char *)malloc(LINE_LENGHT);
     }
 
+    ip_string = (char *)malloc(10);
+    vote_option_red = (char *)malloc(12);
+    vote_option_green = (char *)malloc(12);
+
     IPAddress ip = WiFi.localIP();
 
-    ip_string = (char *)malloc(10);
     sprintf(ip_string, "IP: %d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 
     strcpy(line[0], "Set text");
     strcpy(line[1], "with APP!");
     strcpy(line[2], "\0");
     strcpy(line[3], ip_string);
+    strcpy(vote_option_red, "Red");
+    strcpy(vote_option_green, "Green");
+
+    //free(ip_string);
 
     updateScreen();
 
@@ -146,6 +155,18 @@ void loop()
             Serial.println("Line 4 set");
             break;
 
+        case 'R': // Red button vote option
+            strcpy(vote_option_red, data + 1);
+            update = true;
+            Serial.println("Red option set");
+            break;
+
+        case 'G': // Red button vote option
+            strcpy(vote_option_green, data + 1);
+            update = true;
+            Serial.println("Green option set");
+            break;
+
         case 'C': // Clear/Reset
             for (int i = 0; i < MAX_LINES; i++)
             {
@@ -159,7 +180,7 @@ void loop()
 
             break;
 
-        case 'S': // Statusl
+        case 'S': // Status
             /* TODO: Add current display data */
             Serial.println("Connected to voteMachine!");
             Serial.println("Web IP: " + String(ip_string));
@@ -207,7 +228,8 @@ char * readSerial()
 /* Write text to display */
 void updateScreen()
 {
-    sprintf(line[MAX_LINES-1], "Green: %i | Red: %i", vote_green, vote_red);
+    sprintf(line[MAX_LINES-1], "%s: %i | %s: %i",
+        vote_option_green, vote_green, vote_option_red, vote_red);
 
     display.clear();
 
