@@ -115,8 +115,6 @@ void setup()
     strcpy(vote_option_red, "Red");
     strcpy(vote_option_green, "Green");
 
-    //free(ip_string);
-
     updateScreen();
 
     update = false;
@@ -183,9 +181,11 @@ void loop()
         case 'S': // Status
             /* TODO: Add current display data */
             Serial.println("Connected to voteMachine!");
-            Serial.println("Web IP: " + String(ip_string));
-            Serial.println("GREEN: " + String(vote_green));
-            Serial.println("RED: " + String(vote_red));
+            Serial.println(String(ip_string));
+            Serial.println(String(vote_option_green) + ": "
+                + String(vote_green));
+            Serial.println(String(vote_option_red) + ": "
+                + String(vote_red));
             break;
 
         default:

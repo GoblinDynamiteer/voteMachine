@@ -47,6 +47,12 @@
             this.lblRedVotes = new System.Windows.Forms.Label();
             this.lblGreenVotes = new System.Windows.Forms.Label();
             this.lblQuestion = new System.Windows.Forms.Label();
+            this.lblVoteOptGreen = new System.Windows.Forms.Label();
+            this.lblVoteOptRed = new System.Windows.Forms.Label();
+            this.textBoxGreenOpt = new System.Windows.Forms.TextBox();
+            this.textBoxRedOpt = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -59,17 +65,18 @@
             // textBoxInput
             // 
             this.textBoxInput.Location = new System.Drawing.Point(40, 175);
-            this.textBoxInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxInput.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxInput.MaxLength = 200;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(274, 114);
             this.textBoxInput.TabIndex = 0;
+            this.textBoxInput.TextChanged += new System.EventHandler(this.textBoxInput_TextChanged);
             // 
             // btnSend
             // 
             this.btnSend.Location = new System.Drawing.Point(364, 175);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(212, 44);
             this.btnSend.TabIndex = 1;
@@ -82,7 +89,7 @@
             this.comboBoxPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPorts.FormattingEnabled = true;
             this.comboBoxPorts.Location = new System.Drawing.Point(98, 48);
-            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxPorts.Name = "comboBoxPorts";
             this.comboBoxPorts.Size = new System.Drawing.Size(978, 33);
             this.comboBoxPorts.TabIndex = 2;
@@ -91,7 +98,7 @@
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(364, 248);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(212, 44);
             this.btnClear.TabIndex = 5;
@@ -121,8 +128,8 @@
             // 
             // textBoxData
             // 
-            this.textBoxData.Location = new System.Drawing.Point(40, 415);
-            this.textBoxData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxData.Location = new System.Drawing.Point(40, 507);
+            this.textBoxData.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxData.Multiline = true;
             this.textBoxData.Name = "textBoxData";
             this.textBoxData.ReadOnly = true;
@@ -132,7 +139,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(34, 377);
+            this.label3.Location = new System.Drawing.Point(34, 469);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 25);
@@ -141,8 +148,8 @@
             // 
             // btnStatus
             // 
-            this.btnStatus.Location = new System.Drawing.Point(528, 363);
-            this.btnStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStatus.Location = new System.Drawing.Point(528, 455);
+            this.btnStatus.Margin = new System.Windows.Forms.Padding(4);
             this.btnStatus.Name = "btnStatus";
             this.btnStatus.Size = new System.Drawing.Size(48, 40);
             this.btnStatus.TabIndex = 10;
@@ -152,8 +159,8 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(40, 310);
-            this.progressBar.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.progressBar.Location = new System.Drawing.Point(40, 402);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(6);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(536, 44);
             this.progressBar.TabIndex = 17;
@@ -169,7 +176,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::voteApp.Properties.Resources.vote_circle_red;
-            this.pictureBox1.Location = new System.Drawing.Point(839, 344);
+            this.pictureBox1.Location = new System.Drawing.Point(839, 475);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(200, 200);
@@ -181,7 +188,7 @@
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox2.Image = global::voteApp.Properties.Resources.vote_circle_green;
-            this.pictureBox2.Location = new System.Drawing.Point(627, 344);
+            this.pictureBox2.Location = new System.Drawing.Point(627, 475);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(200, 200);
@@ -195,7 +202,7 @@
             this.lblRedVotes.BackColor = System.Drawing.Color.Red;
             this.lblRedVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRedVotes.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblRedVotes.Location = new System.Drawing.Point(906, 415);
+            this.lblRedVotes.Location = new System.Drawing.Point(906, 546);
             this.lblRedVotes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblRedVotes.Name = "lblRedVotes";
             this.lblRedVotes.Size = new System.Drawing.Size(62, 67);
@@ -209,7 +216,7 @@
             this.lblGreenVotes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.lblGreenVotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold);
             this.lblGreenVotes.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblGreenVotes.Location = new System.Drawing.Point(693, 415);
+            this.lblGreenVotes.Location = new System.Drawing.Point(693, 546);
             this.lblGreenVotes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblGreenVotes.Name = "lblGreenVotes";
             this.lblGreenVotes.Size = new System.Drawing.Size(62, 67);
@@ -227,11 +234,73 @@
             this.lblQuestion.TabIndex = 18;
             this.lblQuestion.Text = "RAD1\r\nRAD2\r\nRAD3";
             // 
+            // lblVoteOptGreen
+            // 
+            this.lblVoteOptGreen.AutoSize = true;
+            this.lblVoteOptGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVoteOptGreen.Location = new System.Drawing.Point(622, 430);
+            this.lblVoteOptGreen.Name = "lblVoteOptGreen";
+            this.lblVoteOptGreen.Size = new System.Drawing.Size(96, 33);
+            this.lblVoteOptGreen.TabIndex = 19;
+            this.lblVoteOptGreen.Text = "Green";
+            // 
+            // lblVoteOptRed
+            // 
+            this.lblVoteOptRed.AutoSize = true;
+            this.lblVoteOptRed.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVoteOptRed.Location = new System.Drawing.Point(839, 430);
+            this.lblVoteOptRed.Name = "lblVoteOptRed";
+            this.lblVoteOptRed.Size = new System.Drawing.Size(74, 37);
+            this.lblVoteOptRed.TabIndex = 20;
+            this.lblVoteOptRed.Text = "Red";
+            // 
+            // textBoxGreenOpt
+            // 
+            this.textBoxGreenOpt.Location = new System.Drawing.Point(40, 343);
+            this.textBoxGreenOpt.MaxLength = 8;
+            this.textBoxGreenOpt.Name = "textBoxGreenOpt";
+            this.textBoxGreenOpt.Size = new System.Drawing.Size(163, 31);
+            this.textBoxGreenOpt.TabIndex = 21;
+            this.textBoxGreenOpt.TextChanged += new System.EventHandler(this.textBoxGreenOpt_TextChanged);
+            // 
+            // textBoxRedOpt
+            // 
+            this.textBoxRedOpt.Location = new System.Drawing.Point(239, 343);
+            this.textBoxRedOpt.MaxLength = 8;
+            this.textBoxRedOpt.Name = "textBoxRedOpt";
+            this.textBoxRedOpt.Size = new System.Drawing.Size(163, 31);
+            this.textBoxRedOpt.TabIndex = 22;
+            this.textBoxRedOpt.TextChanged += new System.EventHandler(this.textBoxRedOpt_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(40, 312);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(114, 25);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "Grön fråga";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(234, 312);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 25);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Röd fråga";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1094, 704);
+            this.ClientSize = new System.Drawing.Size(1094, 823);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxRedOpt);
+            this.Controls.Add(this.textBoxGreenOpt);
+            this.Controls.Add(this.lblVoteOptRed);
+            this.Controls.Add(this.lblVoteOptGreen);
             this.Controls.Add(this.lblQuestion);
             this.Controls.Add(this.lblGreenVotes);
             this.Controls.Add(this.progressBar);
@@ -248,7 +317,7 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.textBoxInput);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmMain";
             this.Text = "voteMachine App";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -277,6 +346,12 @@
         private System.Windows.Forms.Label lblRedVotes;
         private System.Windows.Forms.Label lblGreenVotes;
         private System.Windows.Forms.Label lblQuestion;
+        private System.Windows.Forms.Label lblVoteOptGreen;
+        private System.Windows.Forms.Label lblVoteOptRed;
+        private System.Windows.Forms.TextBox textBoxGreenOpt;
+        private System.Windows.Forms.TextBox textBoxRedOpt;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

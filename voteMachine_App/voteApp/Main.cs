@@ -12,6 +12,7 @@ namespace voteApp
     {
         string[] ports;
         private string serialData;
+        bool updateGreenOpt, updateRedOpt, updateQuestion;
 
         enum Error
         {
@@ -46,6 +47,9 @@ namespace voteApp
             }
 
             lblQuestion.Text = "";
+            updateGreenOpt = false;
+            updateRedOpt = false;
+            updateQuestion = false;
 
         }
 
@@ -135,16 +139,36 @@ namespace voteApp
         /* Event method for send button */
         private void btnSend_Click(object sender, EventArgs e)
         {
-            lblQuestion.Text = textBoxInput.Text;
+            if (updateRedOpt)
+            {
+                updateRedOpt = false;
+                serialPort.Write("R" + textBoxRedOpt.Text + '\0');
+                lblVoteOptRed.Text = textBoxRedOpt.Text;
+                Wait(1500);
+            }
 
-            progressBar.Visible = true;
-            textBoxInput.ReadOnly = true;
+            if (updateGreenOpt)
+            {
+                updateGreenOpt = false;
+                serialPort.Write("G" + textBoxGreenOpt.Text + '\0');
+                lblVoteOptGreen.Text = textBoxGreenOpt.Text;
+                Wait(1500);
+            }
 
-            progressBar.Maximum = 100;
-            progressBar.Step = 1;
-            progressBar.Value = 0;
+            if (updateQuestion)
+            {
+                lblQuestion.Text = textBoxInput.Text;
+                progressBar.Visible = true;
+                textBoxInput.ReadOnly = true;
 
-            backgroundWorkerSendText.RunWorkerAsync();
+                progressBar.Maximum = 100;
+                progressBar.Step = 1;
+                progressBar.Value = 0;
+
+                backgroundWorkerSendText.RunWorkerAsync();
+                updateQuestion = false;
+            }
+            
 
         }
 
@@ -262,6 +286,17 @@ namespace voteApp
 
         #region BackgroundWorker
 
+        private void Wait(int ticks)
+        {
+            int tick = Environment.TickCount & Int32.MaxValue;
+
+            while ((Environment.TickCount & Int32.MaxValue) -
+                tick < ticks)
+            {
+                ; // Do nothing
+            }
+        }
+
         /* Background worker */
         private void backgroundWorkerSendText_DoWork(
             object sender, DoWorkEventArgs e)
@@ -273,13 +308,7 @@ namespace voteApp
                 serialPort.Write((i + 1).ToString() +
                     textBoxInput.Lines[i] + '\0');
 
-                int tick = Environment.TickCount & Int32.MaxValue;
-
-                while ((Environment.TickCount & Int32.MaxValue) -
-                    tick < 1500)
-                {
-                    ; // Do nothing
-                }
+                Wait(1500);
 
                 backgroundWorkerSendText.ReportProgress(
                     (int)((float)(i+1) / (float)textBoxInput.Lines.Length 
@@ -302,6 +331,20 @@ namespace voteApp
 
         #endregion
 
+        private void textBoxGreenOpt_TextChanged(object sender, EventArgs e)
+        {
+            updateGreenOpt = true;
+        }
+
+        private void textBoxInput_TextChanged(object sender, EventArgs e)
+        {
+            updateQuestion = true;
+        }
+
+        private void textBoxRedOpt_TextChanged(object sender, EventArgs e)
+        {
+            updateRedOpt = true;
+        }
     }
 
 
