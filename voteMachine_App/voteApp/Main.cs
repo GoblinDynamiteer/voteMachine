@@ -27,7 +27,7 @@ namespace voteApp
 
             /* Update port list and fill port 
              * comboBox */
-            UpdateCOMportList(); 
+            UpdateCOMportList();
 
             /* Open first available port */
             if (ports.Length > 0)
@@ -245,7 +245,7 @@ namespace voteApp
         }
 
         /* Update drop-down list with available COM-ports */
-        void UpdateCOMportList()
+        void UpdateCOMportList(bool getDeviceNames = false)
         {
             ports = SerialPort.GetPortNames();
 
@@ -259,7 +259,7 @@ namespace voteApp
             {
                 ComboboxItem item = new ComboboxItem();
 
-                item.Text = port + ": " + SerialPortDeviceName(port);
+                item.Text = port + (getDeviceNames ? ": " + SerialPortDeviceName(port) : "");
                 item.Value = port;
 
                 comboBoxPorts.Items.Add(item);
