@@ -194,6 +194,8 @@ namespace voteApp
                 textBoxGreenOpt.Text = "";
                 textBoxRedOpt.Text = "";
 
+                lblQuestion.Text = "";
+
                 lblVoteOptGreen.Text = "Green";
                 lblVoteOptRed.Text = "Red";
 

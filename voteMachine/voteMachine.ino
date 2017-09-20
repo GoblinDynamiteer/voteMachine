@@ -176,6 +176,9 @@ void loop()
             vote_count_red = 0;
             vote_count_green = 0;
 
+            strcpy(vote_option_red, "Red");
+            strcpy(vote_option_green, "Green");
+
             update_display = true;
 
             break;
