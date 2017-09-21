@@ -2,11 +2,10 @@
 <html lang="sv">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <link rel="stylesheet" href="css/themes/my-custom-theme.css" />
-        <link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
     </head>
     <body>
         <div data-role="page">
@@ -16,9 +15,13 @@
                 </h1>
             </div>
             <div data-role="main" class="ui-content">
-                <h2>
-                    Rösta här
-                </h2>
+                /n
+                <ul data-role="listview">
+                    <li data-role="list-divider">Fråga</li>
+                    <li>JA<span class="ui-li-count">12</span></li>
+                    <li>NEJ<span class="ui-li-count">12</span></li>
+                </ul>
+                /n
             </div>
             <div data-role="footer">
                 <h2>
