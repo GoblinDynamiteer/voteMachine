@@ -102,9 +102,6 @@ void setup()
         line[i] = "";
     }
 
-    line[0] = "Set question with";
-    line[1] = "VoteMachineApp";
-
     ip_string.reserve(20);
     vote_option_red.reserve(12);
     vote_option_green.reserve(12);
@@ -119,6 +116,15 @@ void setup()
     vote_option_green = "Green";
 
     IPAddress ip = WiFi.localIP();
+    for (int i = 0; i < 4; i++)
+    {
+        ip_string += i  ? "." + String(ip[i]) : String(ip[i]);
+    }
+
+
+    line[0] = "Set question with";
+    line[1] = "VoteMachineApp";
+    line[3] = "Ip: " + ip_string;
 
     updateScreen();
 
