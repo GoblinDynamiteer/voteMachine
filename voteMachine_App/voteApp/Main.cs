@@ -139,36 +139,38 @@ namespace voteApp
         /* Event method for send button */
         private void btnSend_Click(object sender, EventArgs e)
         {
+            string command = "";
+
             if (updateRedOpt)
             {
                 updateRedOpt = false;
-                serialPort.WriteLine("R" + textBoxRedOpt.Text);
+                command += "R" + textBoxRedOpt.Text + "\r\n";
                 lblVoteOptRed.Text = textBoxRedOpt.Text;
-                Wait(1500);
             }
 
             if (updateGreenOpt)
             {
                 updateGreenOpt = false;
-                serialPort.WriteLine("G" + textBoxGreenOpt.Text);
+                command += "G" + textBoxGreenOpt.Text + "\r\n";
                 lblVoteOptGreen.Text = textBoxGreenOpt.Text;
-                Wait(1500);
             }
 
             if (updateQuestion)
             {
                 lblQuestion.Text = textBoxInput.Text;
-                progressBar.Visible = true;
-                textBoxInput.ReadOnly = true;
 
-                progressBar.Maximum = 100;
-                progressBar.Step = 1;
-                progressBar.Value = 0;
-
-                backgroundWorkerSendText.RunWorkerAsync();
+                int lineCount = 1;
+                foreach (string line in textBoxInput.Lines)
+                {
+                    command += lineCount++ + line + "\r\n";
+                }
                 updateQuestion = false;
             }
-            
+
+            if (command != "" && serialPort.IsOpen)
+            {
+                serialPort.WriteLine(command);
+            }
 
         }
 
@@ -287,53 +289,6 @@ namespace voteApp
             }
 
             return "Not Found";
-        }
-
-        #endregion
-
-        #region BackgroundWorker
-
-        private void Wait(int ticks)
-        {
-            int tick = Environment.TickCount & Int32.MaxValue;
-
-            while ((Environment.TickCount & Int32.MaxValue) -
-                tick < ticks)
-            {
-                ; // Do nothing
-            }
-        }
-
-        /* Background worker */
-        private void backgroundWorkerSendText_DoWork(
-            object sender, DoWorkEventArgs e)
-        {
-            var backgroundWorkerSendText = sender as BackgroundWorker;
-
-            for (int i = 0; i < textBoxInput.Lines.Length; i++)
-            {
-                serialPort.WriteLine((i + 1).ToString() +
-                    textBoxInput.Lines[i]);
-
-                Wait(1500);
-
-                backgroundWorkerSendText.ReportProgress(
-                    (int)((float)(i+1) / (float)textBoxInput.Lines.Length 
-                    * 100.0));
-            }
-
-        }
-
-        private void backgroundWorkerSendText_ProgressChanged(
-            object sender, ProgressChangedEventArgs e)
-        {
-            progressBar.Value = e.ProgressPercentage;
-        }
-
-        private void backgroundWorkerSendText_RunWorkerCompleted(
-            object sender, RunWorkerCompletedEventArgs e)
-        {
-            textBoxInput.ReadOnly = false;
         }
 
         #endregion
