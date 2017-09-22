@@ -43,7 +43,6 @@
 #define LINE_LENGTH 30
 #define MAX_LINES 5
 #define BUTTON_DELAY 200
-const char COMMAND_END = '\n';
 
 const byte int_pin_green = D6;
 const byte int_pin_red = D5;
@@ -56,10 +55,12 @@ WiFiClient client;
 
 SSD1306 display(0x3c, SDA, SCL);
 
-char * line[MAX_LINES];
-char * ip_string;
-char * vote_option_red;
-char * vote_option_green;
+String line[MAX_LINES];
+String ip_string;
+String vote_option_red;
+String vote_option_green;
+String serial_data, serial_data_value;
+bool serial_data_complete;
 
 int vote_count_green, vote_count_red;
 bool update_display, int_red_triggered, int_green_triggered;
@@ -97,23 +98,26 @@ void setup()
 
     for (int i = 0; i < MAX_LINES; i++)
     {
-        line[i] = (char *)malloc(LINE_LENGTH);
+        line[i].reserve(LINE_LENGTH);
+        line[i] = "";
     }
 
-    ip_string = (char *)malloc(20);
-    vote_option_red = (char *)malloc(12);
-    vote_option_green = (char *)malloc(12);
+    line[0] = "Set question with";
+    line[1] = "VoteMachineApp";
+
+    ip_string.reserve(20);
+    vote_option_red.reserve(12);
+    vote_option_green.reserve(12);
+    serial_data.reserve(20);
+    serial_data_value.reserve(20);
+    serial_data_complete = false;
+
+    serial_data = "";
+    serial_data_value = "";
+    vote_option_red = "Red";
+    vote_option_green = "Green";
 
     IPAddress ip = WiFi.localIP();
-
-    sprintf(ip_string, "IP: %d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
-
-    strcpy(line[0], "Set text");
-    strcpy(line[1], "with APP!");
-    strcpy(line[2], "\0");
-    strcpy(line[3], ip_string);
-    strcpy(vote_option_red, "Red");
-    strcpy(vote_option_green, "Green");
 
     updateScreen();
 
@@ -124,82 +128,11 @@ void setup()
 
 void loop()
 {
-    /* Get command from bluetooth serial */
-    char * data;
-    data = readSerial();
+    serialEvent();
 
-    /* Switch on first char in sent command */
-    switch (data[0])
+    if(serial_data_complete)
     {
-        case '1':  // Line 1
-            strcpy(line[0], data + 1);
-            update_display = true;
-            Serial.println("Line 1 set");
-            break;
-
-        case '2': // Line 2
-            strcpy(line[1], data + 1);
-            update_display = true;
-            Serial.println("Line 2 set");
-            break;
-
-        case '3': // Line 3
-            strcpy(line[2], data + 1);
-            update_display = true;
-            Serial.println("Line 3 set");
-            break;
-
-        case '4': // Line 4
-            strcpy(line[3], data + 1);
-            update_display = true;
-            Serial.println("Line 4 set");
-            break;
-
-        case 'R': // Red button vote option
-            strcpy(vote_option_red, data + 1);
-            update_display = true;
-            Serial.println("Red option set");
-            break;
-
-        case 'G': // Red button vote option
-            strcpy(vote_option_green, data + 1);
-            update_display = true;
-            Serial.println("Green option set");
-            break;
-
-        case 'C': // Clear/Reset
-            for (int i = 0; i < MAX_LINES; i++)
-            {
-                strcpy(line[i], "\0");
-            }
-
-            vote_count_red = 0;
-            vote_count_green = 0;
-
-            strcpy(vote_option_red, "Red");
-            strcpy(vote_option_green, "Green");
-
-            update_display = true;
-
-            break;
-
-        case 'S': // Status
-            /* TODO: Add current display data */
-            Serial.println("Connected to voteMachine!");
-            Serial.println(String(ip_string));
-
-            for (int i = 0; i < MAX_LINES; i++)
-            {
-                if(line[i][0] != '\0')
-                {
-                    Serial.println(String(line[i]));
-                }
-            }
-
-            break;
-
-        default:
-            break;
+        handle_command();
     }
 
     if(int_green_triggered)
@@ -228,38 +161,32 @@ void loop()
     }
 }
 
-/* Read serial command (from bluetooth) */
-char * readSerial()
+/* Read serial Data */
+void serialEvent()
 {
-    char command[SERIAL_BUFFER_SIZE + 1];
-
-    int command_size = Serial.readBytesUntil(
-        COMMAND_END,
-        command,
-        SERIAL_BUFFER_SIZE
-    );
-
-    if(command_size > 0)
+    while (Serial.available())
     {
-        command[command_size] = '\0';
-        return command;
+        char read_byte = (char)Serial.read();
+        serial_data += read_byte;
+
+        if (read_byte == '\n')
+        {
+            serial_data_complete = true;
+        }
     }
-
-    return "0";
-
 }
 
 /* Write text to display */
 void updateScreen()
 {
-    sprintf(line[MAX_LINES-1], "%s: %i | %s: %i",
-        vote_option_green, vote_count_green, vote_option_red, vote_count_red);
-
     display.clear();
+
+    line[MAX_LINES-1] = vote_option_green + ": " + String(vote_count_green) + " | " +
+        vote_option_red + ": " + String(vote_count_red);
 
     for(int i = 0; i < MAX_LINES; i++)
     {
-        display.drawString(0, LINE_HEIGHT * i + (i > 2 ? 10 : 0),  String(line[i]));
+        display.drawString(0, LINE_HEIGHT * i + (i > 2 ? 10 : 0),  line[i]);
     }
 
     display.drawHorizontalLine(0, LINE_HEIGHT * 4 - 2 , 128);
@@ -310,6 +237,90 @@ bool check_connection()
     client.flush();
 
     return true;
+}
+
+void handle_command(void)
+{
+    Serial.println("Got command " + serial_data);
+
+    char command = serial_data[0];
+
+    switch(command)
+    {
+        case '1':  // Line 1
+            line[0] = serial_data.substring(1);
+            update_display = true;
+            Serial.println("Line 1 set");
+            break;
+
+        case '2': // Line 2
+            line[1] = serial_data.substring(1);
+            update_display = true;
+            Serial.println("Line 2 set");
+            break;
+
+        case '3': // Line 3
+            line[2] = serial_data.substring(1);
+            update_display = true;
+            Serial.println("Line 3 set");
+            break;
+
+        case '4': // Line 4
+            line[3] = serial_data.substring(1);
+            update_display = true;
+            Serial.println("Line 4 set");
+            break;
+
+        case 'R': // Red button vote option
+            vote_option_red = serial_data.substring(1);
+            update_display = true;
+            Serial.println("Red option set");
+            break;
+
+        case 'G': // Red button vote option
+            vote_option_green = serial_data.substring(1);
+            update_display = true;
+            Serial.println("Green option set");
+            break;
+
+        case 'C': // Clear/Reset
+            for (int i = 0; i < MAX_LINES; i++)
+            {
+                line[i] = "";
+            }
+
+            vote_count_red = 0;
+            vote_count_green = 0;
+
+            vote_option_red = "Red";
+            vote_option_green = "Green";
+
+            update_display = true;
+
+            break;
+
+        case 'S': // Status
+            /* TODO: Add current display data */
+            Serial.println("Connected to voteMachine!");
+            Serial.println(ip_string);
+
+            for (int i = 0; i < MAX_LINES; i++)
+            {
+                if(line[i] != "")
+                {
+                    Serial.println(line[i]);
+                }
+            }
+
+            break;
+
+        default:
+            break;
+    }
+
+    serial_data = "";
+    serial_data_value = "";
+    serial_data_complete = false;
 }
 
 /* Show webpage for client */
