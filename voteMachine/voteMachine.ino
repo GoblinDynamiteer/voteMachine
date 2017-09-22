@@ -114,6 +114,7 @@ void setup()
 
     serial_data = "";
     serial_data_value = "";
+    ip_string = "";
     vote_option_red = "Red";
     vote_option_green = "Green";
 
@@ -167,12 +168,14 @@ void serialEvent()
     while (Serial.available())
     {
         char read_byte = (char)Serial.read();
-        serial_data += read_byte;
 
         if (read_byte == '\n')
         {
             serial_data_complete = true;
+            return;
         }
+
+        serial_data += read_byte;
     }
 }
 
@@ -181,8 +184,9 @@ void updateScreen()
 {
     display.clear();
 
-    line[MAX_LINES-1] = vote_option_green + ": " + String(vote_count_green) + " | " +
-        vote_option_red + ": " + String(vote_count_red);
+    line[MAX_LINES-1] = vote_option_green + ": " +
+        String(vote_count_green) + " | " + vote_option_red + ": " +
+        String(vote_count_red);
 
     for(int i = 0; i < MAX_LINES; i++)
     {
@@ -241,8 +245,6 @@ bool check_connection()
 
 void handle_command(void)
 {
-    Serial.println("Got command " + serial_data);
-
     char command = serial_data[0];
 
     switch(command)
@@ -250,37 +252,31 @@ void handle_command(void)
         case '1':  // Line 1
             line[0] = serial_data.substring(1);
             update_display = true;
-            Serial.println("Line 1 set");
             break;
 
         case '2': // Line 2
             line[1] = serial_data.substring(1);
             update_display = true;
-            Serial.println("Line 2 set");
             break;
 
         case '3': // Line 3
             line[2] = serial_data.substring(1);
             update_display = true;
-            Serial.println("Line 3 set");
             break;
 
         case '4': // Line 4
             line[3] = serial_data.substring(1);
             update_display = true;
-            Serial.println("Line 4 set");
             break;
 
         case 'R': // Red button vote option
             vote_option_red = serial_data.substring(1);
             update_display = true;
-            Serial.println("Red option set");
             break;
 
         case 'G': // Red button vote option
             vote_option_green = serial_data.substring(1);
             update_display = true;
-            Serial.println("Green option set");
             break;
 
         case 'C': // Clear/Reset
@@ -300,7 +296,6 @@ void handle_command(void)
             break;
 
         case 'S': // Status
-            /* TODO: Add current display data */
             Serial.println("Connected to voteMachine!");
             Serial.println(ip_string);
 

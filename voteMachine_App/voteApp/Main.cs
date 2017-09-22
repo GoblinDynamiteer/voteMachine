@@ -142,7 +142,7 @@ namespace voteApp
             if (updateRedOpt)
             {
                 updateRedOpt = false;
-                serialPort.Write("R" + textBoxRedOpt.Text + '\0');
+                serialPort.WriteLine("R" + textBoxRedOpt.Text);
                 lblVoteOptRed.Text = textBoxRedOpt.Text;
                 Wait(1500);
             }
@@ -150,7 +150,7 @@ namespace voteApp
             if (updateGreenOpt)
             {
                 updateGreenOpt = false;
-                serialPort.Write("G" + textBoxGreenOpt.Text + '\0');
+                serialPort.WriteLine("G" + textBoxGreenOpt.Text);
                 lblVoteOptGreen.Text = textBoxGreenOpt.Text;
                 Wait(1500);
             }
@@ -177,7 +177,7 @@ namespace voteApp
         {
             if (serialPort.IsOpen)
             {
-                serialPort.Write("S"); // Check status
+                serialPort.WriteLine("S"); // Check status
             }
         }
 
@@ -188,7 +188,7 @@ namespace voteApp
         {
             if (serialPort.IsOpen)
             {
-                serialPort.Write("C");
+                serialPort.WriteLine("C");
                 textBoxInput.Text = "";
 
                 textBoxGreenOpt.Text = "";
@@ -312,8 +312,8 @@ namespace voteApp
 
             for (int i = 0; i < textBoxInput.Lines.Length; i++)
             {
-                serialPort.Write((i + 1).ToString() +
-                    textBoxInput.Lines[i] + '\0');
+                serialPort.WriteLine((i + 1).ToString() +
+                    textBoxInput.Lines[i]);
 
                 Wait(1500);
 
