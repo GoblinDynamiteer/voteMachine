@@ -61,6 +61,8 @@ String ip_string;
 String vote_option_red;
 String vote_option_green;
 String serial_data, serial_data_value;
+const String default_red_option = "Red";
+const String default_green_option = "Red";
 bool serial_data_complete;
 
 int vote_count_green, vote_count_red;
@@ -113,8 +115,8 @@ void setup()
     serial_data = "";
     serial_data_value = "";
     ip_string = "";
-    vote_option_red = "Red";
-    vote_option_green = "Green";
+    vote_option_red = default_red_option;
+    vote_option_green = default_green_option
 
     IPAddress ip = WiFi.localIP();
     for (int i = 0; i < 4; i++)
@@ -227,9 +229,9 @@ void int_func_red()
     }
 }
 
+/* Check if web client is available */
 bool check_connection()
 {
-    /* Check for new client connected to server */
     client = server.available();
 
     if (!client)
@@ -240,28 +242,31 @@ bool check_connection()
     return true;
 }
 
+/* Process incoming serial command */
 void handle_command(void)
 {
+    /* First byte determines command,
+    rest is data to set */
     char command = serial_data[0];
 
     switch(command)
     {
-        case '1':  // Line 1
+        case '1':  // Write to display line 1
             line[0] = serial_data.substring(1);
             update_display = true;
             break;
 
-        case '2': // Line 2
+        case '2': // Write to display line 2
             line[1] = serial_data.substring(1);
             update_display = true;
             break;
 
-        case '3': // Line 3
+        case '3': // Write to display line 3
             line[2] = serial_data.substring(1);
             update_display = true;
             break;
 
-        case '4': // Line 4
+        case '4': // Write to display line 4
             line[3] = serial_data.substring(1);
             update_display = true;
             break;
@@ -285,8 +290,8 @@ void handle_command(void)
             vote_count_red = 0;
             vote_count_green = 0;
 
-            vote_option_red = "Red";
-            vote_option_green = "Green";
+            vote_option_red = default_red_option;
+            vote_option_green = default_green_option;
 
             update_display = true;
 
