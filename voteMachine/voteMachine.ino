@@ -17,6 +17,7 @@
 #include <WiFiSettings.h> // SSID & Password
 #include <Wire.h>
 #include "SSD1306.h"
+#include "web_response.h"
 
 #define PIN_WIRE_SDA 4
 #define PIN_WIRE_SCL 5
@@ -121,7 +122,6 @@ void setup()
         ip_string += i  ? "." + String(ip[i]) : String(ip[i]);
     }
 
-
     line[0] = "Set question with";
     line[1] = "VoteMachineApp";
     line[3] = "Ip: " + ip_string;
@@ -173,6 +173,7 @@ void serialEvent()
 {
     while (Serial.available())
     {
+        Serial.print(".");
         char read_byte = (char)Serial.read();
 
         if (read_byte == '\n')
@@ -235,16 +236,6 @@ bool check_connection()
     {
         return false;
     }
-
-    while(!client.available())
-    {
-        delay(1);
-    }
-
-    /* Read request */
-    String request = client.readStringUntil('\r');
-    Serial.println(request);
-    client.flush();
 
     return true;
 }
@@ -327,33 +318,22 @@ void handle_command(void)
 /* Show webpage for client */
 void clientResponse()
 {
-    const String web_title = "voteMachineWeb!";
-    const String font_name = "Oswald";
-    const String font_url = "https://fonts.googleapis.com/css?family=" + font_name;
-    const String font_color = "#fff";
-    const String bg_color = "#000";
-    const String font_size ="70";
-
     client.println("HTTP/1.1 200 OK");
     client.println("Content-Type: text/html");
     client.println("");
-    client.println("<!DOCTYPE HTML>");
 
-    client.println("<html>");
-    client.println("<title>" + web_title + "</title>");
-    client.println("<link href=\"" + font_url + "\" rel=\"stylesheet\">");
-    client.println("<body bgcolor=" + bg_color + " style=\"font-family: '" +
-        font_name + "';color:" + font_color + ";font-size: " + font_size + "px\">");
+    String web_response = "";
 
-    client.println(String(line[0]) + "<br>");
-    client.println(String(line[1]) + "<br>");
-    client.println(String(line[2]) + "<p>");
+    for(int i = 0; i < 4; i++)
+    {
+        web_response += i != 3 ? line[i] + "<br>" : line[i];
+    }
 
-    client.println("<font style=\"color:green;\">"
-        + String(vote_option_green) + ": "
-        + String(vote_count_green) + "</font> | ");
-    client.println("<font style=\"color:red;\">"
-        + String(vote_option_red) + ": "
-        + String(vote_count_red) + "</font>");
-    client.println("</html>");
+    web_response += "<li>" + vote_option_green + "<span class=\"ui-li-count\">"
+        + String(vote_count_green) + "<\/span><\/li>";
+    web_response += "<li>" + vote_option_red + "<span class=\"ui-li-count\">"
+        + String(vote_count_red) + "<\/span><\/li>";
+
+    client.println(web_response_string_head + web_response
+        + web_response_string_tail);
 }
