@@ -116,7 +116,7 @@ void setup()
     serial_data_value = "";
     ip_string = "";
     vote_option_red = default_red_option;
-    vote_option_green = default_green_option
+    vote_option_green = default_green_option;
 
     IPAddress ip = WiFi.localIP();
     for (int i = 0; i < 4; i++)
