@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebForm));
             this.tbMac = new System.Windows.Forms.TextBox();
             this.tbIp = new System.Windows.Forms.TextBox();
             this.btnGetDevices = new System.Windows.Forms.Button();
@@ -91,7 +92,11 @@
             this.Controls.Add(this.tbIp);
             this.Controls.Add(this.btnGetDevices);
             this.Controls.Add(this.listBoxDevices);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "WebForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WebForm";
             this.ResumeLayout(false);
             this.PerformLayout();

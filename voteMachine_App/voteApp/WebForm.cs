@@ -10,17 +10,23 @@ namespace voteApp
 {
     public partial class WebForm : Form
     {
-        string regexIp = @"\d+\.\d+\.\d+\.\d+";
-        string regexMac = @".{2}\-.{2}\-.{2}\-.{2}\-.{2}\-.{2}";
+        const string regexIp = @"\d+\.\d+\.\d+\.\d+";
+        const string regexMac = @".{2}\-.{2}\-.{2}\-.{2}\-.{2}\-.{2}";
+        const string routerMac = "90-8d-78-b6-6d-48";
 
         public WebForm()
         {
             InitializeComponent();
-
+            UpdateDeviceList();
             this.Text = "Hitta web!";
         }
 
         private void btnGetDevices_Click(object sender, EventArgs e)
+        {
+            UpdateDeviceList();
+        }
+
+        private void UpdateDeviceList()
         {
             listBoxDevices.Items.Clear();
 
@@ -29,6 +35,12 @@ namespace voteApp
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = result[i].Trim();
+
+                if (routerMac == Regex.Match(result[i], regexMac).Value)
+                {
+                    lblWebLink.Text = "http://" + Regex.Match(
+                        result[i], regexIp).Value;
+                }
             }
 
             listBoxDevices.Items.AddRange(result);

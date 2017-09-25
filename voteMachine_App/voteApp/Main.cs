@@ -4,7 +4,6 @@ using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Management;
-using System.ComponentModel;
 
 namespace voteApp
 {
@@ -113,27 +112,6 @@ namespace voteApp
 
         }
 
-
-        /* Event method for comboBox change */
-        private void comboBoxPorts_SelectedIndexChanged(
-            object sender, EventArgs e)
-        {
-            serialPort.Close();
-
-            string newPort = (
-                comboBoxPorts.SelectedItem 
-                as ComboboxItem).Value.ToString();
-
-            textBoxData.AppendText("Byter port " + 
-                serialPort.PortName + "->" + newPort + "\r\n");
-
-            if (OpenCOM(newPort))
-            {
-                serialPort.Write("S"); // Check status
-            }
-
-        }
-
         #region Button methods
 
         /* Event method for send button */
@@ -205,6 +183,34 @@ namespace voteApp
                 lblRedVotes.Text = "0";
             }
         }
+
+        /* Event method  */
+        private void btnWeb_Click(
+            object sender, EventArgs e)
+        {
+            Form webForm = new WebForm();
+            webForm.Show();
+        }
+
+        /* Event method for Open Com button */
+        private void lblComOpen_Click(
+            object sender, EventArgs e)
+        {
+            serialPort.Close();
+
+            string newPort = (
+                comboBoxPorts.SelectedItem
+                as ComboboxItem).Value.ToString();
+
+            textBoxData.AppendText("Byter port " +
+                serialPort.PortName + "-> " + newPort + "\r\n");
+
+            if (OpenCOM(newPort))
+            {
+                serialPort.Write("S"); // Check status
+            }
+        }
+
         #endregion
 
         #region ComPort/serialport methods
@@ -296,12 +302,6 @@ namespace voteApp
         private void textBoxGreenOpt_TextChanged(object sender, EventArgs e)
         {
             updateGreenOpt = true;
-        }
-
-        private void btnWeb_Click(object sender, EventArgs e)
-        {
-            Form webForm = new WebForm();
-            webForm.Show();
         }
 
         private void textBoxInput_TextChanged(object sender, EventArgs e)

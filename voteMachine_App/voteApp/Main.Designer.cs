@@ -65,7 +65,7 @@
             // textBoxInput
             // 
             this.textBoxInput.Location = new System.Drawing.Point(40, 175);
-            this.textBoxInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxInput.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxInput.MaxLength = 200;
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
@@ -76,7 +76,7 @@
             // btnSend
             // 
             this.btnSend.Location = new System.Drawing.Point(364, 175);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(150, 44);
             this.btnSend.TabIndex = 1;
@@ -89,16 +89,15 @@
             this.comboBoxPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPorts.FormattingEnabled = true;
             this.comboBoxPorts.Location = new System.Drawing.Point(98, 48);
-            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxPorts.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxPorts.Name = "comboBoxPorts";
             this.comboBoxPorts.Size = new System.Drawing.Size(216, 33);
             this.comboBoxPorts.TabIndex = 2;
-            this.comboBoxPorts.SelectedIndexChanged += new System.EventHandler(this.comboBoxPorts_SelectedIndexChanged);
             // 
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(364, 248);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(150, 44);
             this.btnClear.TabIndex = 5;
@@ -129,7 +128,7 @@
             // textBoxData
             // 
             this.textBoxData.Location = new System.Drawing.Point(42, 475);
-            this.textBoxData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxData.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxData.Multiline = true;
             this.textBoxData.Name = "textBoxData";
             this.textBoxData.ReadOnly = true;
@@ -149,7 +148,7 @@
             // btnStatus
             // 
             this.btnStatus.Location = new System.Drawing.Point(524, 417);
-            this.btnStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStatus.Margin = new System.Windows.Forms.Padding(4);
             this.btnStatus.Name = "btnStatus";
             this.btnStatus.Size = new System.Drawing.Size(54, 44);
             this.btnStatus.TabIndex = 10;
@@ -161,7 +160,7 @@
             // 
             this.pictureBox1.Image = global::voteApp.Properties.Resources.vote_circle_red;
             this.pictureBox1.Location = new System.Drawing.Point(840, 263);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(200, 200);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -173,7 +172,7 @@
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox2.Image = global::voteApp.Properties.Resources.vote_circle_green;
             this.pictureBox2.Location = new System.Drawing.Point(628, 263);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(200, 200);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -244,7 +243,7 @@
             // textBoxGreenOpt
             // 
             this.textBoxGreenOpt.Location = new System.Drawing.Point(40, 342);
-            this.textBoxGreenOpt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxGreenOpt.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxGreenOpt.MaxLength = 8;
             this.textBoxGreenOpt.Name = "textBoxGreenOpt";
             this.textBoxGreenOpt.Size = new System.Drawing.Size(114, 31);
@@ -254,7 +253,7 @@
             // textBoxRedOpt
             // 
             this.textBoxRedOpt.Location = new System.Drawing.Point(200, 342);
-            this.textBoxRedOpt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxRedOpt.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRedOpt.MaxLength = 8;
             this.textBoxRedOpt.Name = "textBoxRedOpt";
             this.textBoxRedOpt.Size = new System.Drawing.Size(114, 31);
@@ -284,17 +283,18 @@
             // lblComOpen
             // 
             this.lblComOpen.Location = new System.Drawing.Point(364, 48);
-            this.lblComOpen.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.lblComOpen.Margin = new System.Windows.Forms.Padding(6);
             this.lblComOpen.Name = "lblComOpen";
             this.lblComOpen.Size = new System.Drawing.Size(150, 40);
             this.lblComOpen.TabIndex = 25;
             this.lblComOpen.Text = "Öppna";
             this.lblComOpen.UseVisualStyleBackColor = true;
+            this.lblComOpen.Click += new System.EventHandler(this.lblComOpen_Click);
             // 
             // btnWeb
             // 
             this.btnWeb.Location = new System.Drawing.Point(364, 417);
-            this.btnWeb.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnWeb.Margin = new System.Windows.Forms.Padding(6);
             this.btnWeb.Name = "btnWeb";
             this.btnWeb.Size = new System.Drawing.Size(150, 44);
             this.btnWeb.TabIndex = 26;
@@ -329,9 +329,12 @@
             this.Controls.Add(this.comboBoxPorts);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.textBoxInput);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimizeBox = false;
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "voteMachine App";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
