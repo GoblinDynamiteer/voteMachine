@@ -62,7 +62,7 @@ String vote_option_red;
 String vote_option_green;
 String serial_data, serial_data_value;
 const String default_red_option = "Red";
-const String default_green_option = "Red";
+const String default_green_option = "Green";
 bool serial_data_complete;
 
 int vote_count_green, vote_count_red;
