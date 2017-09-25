@@ -298,6 +298,12 @@ namespace voteApp
             updateGreenOpt = true;
         }
 
+        private void btnWeb_Click(object sender, EventArgs e)
+        {
+            Form webForm = new WebForm();
+            webForm.Show();
+        }
+
         private void textBoxInput_TextChanged(object sender, EventArgs e)
         {
             updateQuestion = true;
