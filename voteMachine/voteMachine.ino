@@ -175,7 +175,6 @@ void serialEvent()
 {
     while (Serial.available())
     {
-        Serial.print(".");
         char read_byte = (char)Serial.read();
 
         if (read_byte == '\n')
