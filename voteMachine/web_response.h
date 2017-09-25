@@ -10,18 +10,19 @@ Content-Type: text/html
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <link rel="stylesheet" href="themes/theme1.css" />
     </head>
     <body>
-        <div data-role="page">
+        <div data-role="page" data-theme-"a">
             <div data-role="header">
                 <h1>
-                    VoteMachine!
+                    VoteMachine
                 </h1>
             </div>
             <div data-role="main" class="ui-content">
                 /n
                 <ul data-role="listview">
-                <li data-role="list-divider">)";
+                    <li data-role="list-divider">)";
 
 const String web_response_string_tail = R"(
                 </ul>
@@ -29,9 +30,10 @@ const String web_response_string_tail = R"(
             </div>
             <div data-role="footer">
                 <h2>
-                    (C) Dylan och Johan
+                    © Dylan och Johan
                 </h2>
             </div>
         </div>
+
     </body>
-</html>>)";
+</html>)";
