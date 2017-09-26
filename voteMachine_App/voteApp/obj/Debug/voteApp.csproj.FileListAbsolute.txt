@@ -18,3 +18,4 @@ C:\Kod\voteMachine\voteMachine_App\voteApp\obj\Debug\voteApp.csproj.GenerateReso
 C:\Kod\voteMachine\voteMachine_App\voteApp\obj\Debug\voteApp.csproj.CoreCompileInputs.cache
 C:\Kod\voteMachine\voteMachine_App\voteApp\obj\Debug\voteApp.exe
 C:\Kod\voteMachine\voteMachine_App\voteApp\obj\Debug\voteApp.pdb
+C:\Kod\voteMachine\voteMachine_App\voteApp\obj\Debug\voteApp.WebForm.resources
