@@ -13,6 +13,7 @@ namespace voteApp
         const string regexIp = @"\d+\.\d+\.\d+\.\d+";
         const string regexMac = @".{2}\-.{2}\-.{2}\-.{2}\-.{2}\-.{2}";
         const string routerMac = "90-8d-78-b6-6d-48";
+        const string routerWanIP = "192.168.153.145";
 
         public WebForm()
         {
@@ -36,7 +37,15 @@ namespace voteApp
             {
                 result[i] = result[i].Trim();
 
+                /* Match router MAC-address in arp table */
                 if (routerMac == Regex.Match(result[i], regexMac).Value)
+                {
+                    lblWebLink.Text = "http://" + Regex.Match(
+                        result[i], regexIp).Value;
+                }
+
+                /* Match router ip-address in arp table */
+                else if (routerWanIP == Regex.Match(result[i], regexIp).Value)
                 {
                     lblWebLink.Text = "http://" + Regex.Match(
                         result[i], regexIp).Value;
