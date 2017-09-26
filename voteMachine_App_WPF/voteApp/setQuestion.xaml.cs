@@ -36,7 +36,7 @@ namespace voteApp
             command += "R" + textBoxRedOpt.Text + "\r\n";
             command += "G" + textBoxGreenOpt.Text + "\r\n";
 
-            for (int i = 0; i < textBoxInput.LineCount || i < 4; i++)
+            for (int i = 0; i < textBoxInput.LineCount && i < 4; i++)
             {
                 command += (i+1) + textBoxInput.GetLineText(i) + "\r\n";
             }
