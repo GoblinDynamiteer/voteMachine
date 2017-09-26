@@ -1,0 +1,30 @@
+﻿<Window x:Name="mainWindow" x:Class="voteApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:voteApp"
+        mc:Ignorable="d"
+        Title="voteApp" Height="525.809" Width="704" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,2,0" Height="479" VerticalAlignment="Top" RenderTransformOrigin="0.471,0.499">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="193*"/>
+            <ColumnDefinition Width="228*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="textboxStatus" IsReadOnly="True" HorizontalAlignment="Left" Height="344" Margin="15,66,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="295" VerticalScrollBarVisibility="Auto"/>
+        <ComboBox x:Name="listboxCOM" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Width="201" Height="39" Background="#FFF7DCFF" FontSize="18"/>
+        <Button x:Name="btnOpenCOM" Content="Öppna" HorizontalAlignment="Left" Margin="225,18,0,0" VerticalAlignment="Top" Width="85" Height="39" Click="btnOpenCOM_Click" Background="#FFDCF4FF" FontSize="18"/>
+        <CheckBox x:Name="checkboxAutoScroll" Content="Autoscroll" HorizontalAlignment="Left" Margin="16,422,0,0" VerticalAlignment="Top" Height="26" Width="129" FontSize="18"/>
+        <TextBlock x:Name="textQuestion" Margin="40,0,39,273" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Bottom" Grid.Column="1" FontSize="36" FontWeight="Bold"/>
+        <Ellipse x:Name="ellipseRed" Grid.Column="1" StrokeThickness="6" Fill="#FFF50000" Height="141" Margin="193,221,0,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Width="141"/>
+        <Ellipse x:Name="ellipseGreen" Grid.Column="1" StrokeThickness="6" Fill="#FF2DF500" Height="141" Margin="40,221,0,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Width="141"/>
+        <Button x:Name="btnNewQuestion" Content="Sätt ny fråga" Grid.Column="1" Margin="40,410,0,0" VerticalAlignment="Top" Height="46" Background="#FFDCF4FF" Click="btnNewQuestion_Click" FontSize="18" HorizontalAlignment="Left" Width="125"/>
+        <Label x:Name="lblRedVotes" Content="0" Grid.Column="1" HorizontalAlignment="Left" Margin="41,280,0,0" VerticalAlignment="Top" Height="60" Width="140" FontSize="36" FontWeight="Bold" HorizontalContentAlignment="Center"/>
+        <Label x:Name="lblGreenVotes" Content="0" Grid.Column="1" HorizontalAlignment="Left" Margin="193,280,0,0" VerticalAlignment="Top" Height="60" Width="141" FontSize="36" FontWeight="Bold" HorizontalContentAlignment="Center" RenderTransformOrigin="0.239,0.517"/>
+        <Button Content="Återställ" Grid.Column="1" HorizontalAlignment="Left" Margin="193,410,0,0" VerticalAlignment="Top" Width="141" Height="46" Background="#FFDCF4FF" FontSize="18" Click="Button_Click"/>
+        <Label x:Name="lblGreenOption" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="41,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.538" Width="140" Height="34" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <Label x:Name="lblRedOption" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="193,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.538" Width="140" Height="34" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
+
+
+    </Grid>
+</Window>
