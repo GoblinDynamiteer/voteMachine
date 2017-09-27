@@ -17,16 +17,13 @@
 #include <WiFiSettings.h> // SSID & Password
 #include <Wire.h>
 #include "SSD1306.h"
-#include "web_response.h"
+#include "web_response.h" // Static web code
 
+/* NodeMCU Pins */
 #define PIN_WIRE_SDA 4
 #define PIN_WIRE_SCL 5
 #define SDA PIN_WIRE_SDA
 #define SCL PIN_WIRE_SCL
-
-#define LED_BUILTIN 16
-#define BUILTIN_LED 16
-
 #define D0 1
 #define D1 5
 #define D2 4
@@ -39,7 +36,6 @@
 #define D9 3
 #define D10 1
 
-#define SERIAL_BUFFER_SIZE 30
 #define LINE_HEIGHT 10
 #define LINE_LENGTH 30
 #define MAX_LINES 5
@@ -137,33 +133,39 @@ void setup()
 
 void loop()
 {
-    serialEvent();
+    serialEvent(); // Get serial data
 
     if(serial_data_complete)
     {
         handle_command();
     }
 
+    /* Green button has been triggered */
     if(int_green_triggered)
     {
-        Serial.println("Green votes: " + String(vote_count_green));
+        Serial.println("Green votes: "
+            + String(vote_count_green));
         timer_green = millis();
-        int_green_triggered = false;;
+        int_green_triggered = false;
     }
 
+    /* Red button has been triggered */
     if(int_red_triggered)
     {
-        Serial.println("Red votes: " + String(vote_count_red));
+        Serial.println("Red votes: "
+            + String(vote_count_red));
         timer_red = millis();
         int_red_triggered = false;
     }
 
+    /* Redraw / Update display */
     if(update_display)
     {
         updateScreen();
         update_display = false;
     }
 
+    /* Check web connection */
     if(check_connection())
     {
         clientResponse();
