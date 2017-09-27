@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,7 @@ namespace voteApp
         string[] ports;
         SerialPort serialPort;
         string serialData;
+        const string webAddress = "http://192.168.153.145";
         public delegate void NextPrimeDelegate();
 
         public MainWindow()
@@ -152,6 +154,9 @@ namespace voteApp
             if (result == MessageBoxResult.Yes && serialPort.IsOpen)
             {
                 serialPort.WriteLine("C");
+                lblGreenVotes.Content = "0";
+                lblRedVotes.Content = "0";
+                textQuestion.Text = "";
             }
         }
 
@@ -187,6 +192,12 @@ namespace voteApp
             {
                 serialPort.WriteLine("S");
             }
+        }
+
+        private void btnWeb_Click(
+            object sender, RoutedEventArgs e)
+        {
+            Process.Start(webAddress);
         }
     }
 }
