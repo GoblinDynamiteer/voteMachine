@@ -12,8 +12,8 @@
             <ColumnDefinition Width="228*"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="textboxStatus" IsReadOnly="True" HorizontalAlignment="Left" Height="344" Margin="15,66,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="295" VerticalScrollBarVisibility="Auto"/>
-        <ComboBox x:Name="listboxCOM" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Width="201" Height="39" Background="#FFF7DCFF" FontSize="18"/>
-        <Button x:Name="btnOpenCOM" Content="Öppna" HorizontalAlignment="Left" Margin="225,18,0,0" VerticalAlignment="Top" Width="85" Height="39" Click="btnOpenCOM_Click" Background="#FFDCF4FF" FontSize="18"/>
+        <ComboBox x:Name="listboxCOM" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Width="130" Height="39" Background="#FFF7DCFF" FontSize="18"/>
+        <Button x:Name="btnOpenCOM" Content="Öppna" HorizontalAlignment="Left" Margin="164,18,0,0" VerticalAlignment="Top" Width="84" Height="39" Click="btnOpenCOM_Click" Background="#FFDCF4FF" FontSize="18"/>
         <CheckBox x:Name="checkboxAutoScroll" Content="Autoscroll" HorizontalAlignment="Left" Margin="16,422,0,0" VerticalAlignment="Top" Height="26" Width="129" FontSize="18"/>
         <TextBlock x:Name="textQuestion" Margin="40,0,39,273" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Bottom" Grid.Column="1" FontSize="36" FontWeight="Bold"/>
         <Ellipse x:Name="ellipseRed" Grid.Column="1" StrokeThickness="6" Fill="#FFF50000" Height="141" Margin="193,221,0,0" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Width="141"/>
@@ -24,6 +24,7 @@
         <Button Content="Återställ" Grid.Column="1" HorizontalAlignment="Left" Margin="193,410,0,0" VerticalAlignment="Top" Width="141" Height="46" Background="#FFDCF4FF" FontSize="18" Click="Button_Click"/>
         <Label x:Name="lblGreenOption" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="41,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.538" Width="140" Height="34" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
         <Label x:Name="lblRedOption" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="193,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.538" Width="140" Height="34" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="btnStatus" Content="?" HorizontalAlignment="Left" Margin="264,18,0,0" VerticalAlignment="Top" Width="45" Height="39" FontSize="18" Background="#FFDCF4FF" Click="BtnStatus_Click"/>
 
 
     </Grid>

@@ -32,7 +32,7 @@ namespace voteApp
         {
             InitializeComponent();
             serialPort = new SerialPort();
-            serialPort.BaudRate = 115200;
+            serialPort.BaudRate = 9600;
             this.serialPort.DataReceived += new
                 SerialDataReceivedEventHandler(serialPort_DataReceived);
 
@@ -178,6 +178,15 @@ namespace voteApp
                 lblRedVotes.Content = number;
             }
 
+        }
+
+        private void BtnStatus_Click(
+            object sender, RoutedEventArgs e)
+        {
+            if (serialPort.IsOpen)
+            {
+                serialPort.WriteLine("S");
+            }
         }
     }
 }
